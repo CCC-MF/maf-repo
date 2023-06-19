@@ -1,0 +1,13 @@
+spring:
+  docker:
+    compose:
+      file: dev-compose.yml
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8000
+
+
+

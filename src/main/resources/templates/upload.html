@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+    <h1>MAF-Datei <span>[[ ${upload.filename} ]]</span> vom <span>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss')} ]]</span></h1>
+    <a th:href="@{/}">Zurück zur Hauptseite</a>
+    <div th:each="sample : ${samples}">
+        <div th:if="not ${sample.simpleVariants.isEmpty()}">
+            <h3>Einsendenummer: [[ ${sample.tumorSampleBarcode} ]]</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Letzte Änderung</th>
+                    <th>TUMOR_SAMPLE_BARCODE</th>
+                    <th>HUGO_SYMBOL</th>
+                    <th>CHROMOSOME</th>
+                    <th>GENE</th>
+                    <th>START_POSITION</th>
+                    <th>END_POSITION</th>
+                    <th>REFERENCE_ALLELE</th>
+                    <th>TUMOR_SEQ_ALLELE2</th>
+                    <th>HGVSc</th>
+                    <th>HGVSp_short</th>
+                    <th>t_depth</th>
+                    <th>DBSNPRS</th>
+                    <th>ALLELIC_FREQUENCY</th>
+                    <th>COSMIC_ID</th>
+                    <th>Interpretation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="simpleVariant : ${sample.simpleVariants}">
+                    <td th:if="${simpleVariant.isValid()}" style="color: white; background: darkgreen; text-align: center">✓</td>
+                    <td th:if="not ${simpleVariant.isValid()}" style="color: white; background: darkorange; text-align: center">⚠</td>
+                    <td>[[ ${#temporals.format(simpleVariant.modificationTime, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
+                    <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
+                    <td>[[ ${simpleVariant.hugoSymbol} ]]</td>
+                    <td>[[ ${simpleVariant.chromosome} ]]</td>
+                    <td>[[ ${simpleVariant.gene} ]]</td>
+                    <td>[[ ${simpleVariant.startPosition} ]]</td>
+                    <td>[[ ${simpleVariant.endPosition} ]]</td>
+                    <td>[[ ${simpleVariant.referenceAllele} ]]</td>
+                    <td>[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
+                    <td>[[ ${simpleVariant.hgvsc} ]]</td>
+                    <td>[[ ${simpleVariant.hgvsp} ]]</td>
+                    <td>[[ ${simpleVariant.tDepth} ]]</td>
+                    <td>[[ ${simpleVariant.dbSnpRs} ]]</td>
+                    <td>[[ ${simpleVariant.allelicFrequency} ]]</td>
+                    <td>[[ ${simpleVariant.cosmicId} ]]</td>
+                    <td>[[ ${simpleVariant.interpretation} ]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

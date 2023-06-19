@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+    <h1>Einträge</h1>
+    <form method="post" th:action="@{/uploads}" enctype="multipart/form-data">
+        <div>
+            <input type="file" name="file" />
+            <button type="submit">Absenden</button>
+        </div>
+    </form>
+
+    <div th:if="not ${uploads.isEmpty()}">
+        <table>
+            <thead>
+            <tr>
+                <th>Dateiname</th>
+                <th>Hochgeladen am</th>
+                <th>Link</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="upload : ${uploads}" th:id="'upload_' + ${upload.id}">
+                <td>[[ ${upload.filename} ]]</td>
+                <td>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
+                <td><a th:href="@{/uploads/{id}(id=${upload.id})}">[[ @{/uploads/{id}(id=${upload.id})} ]]</a></td>
+                <td>
+                    <button title="Löschen" th:data-id="${upload.id}" onclick="deleteUpload(this.dataset['id'])" style="background: red; color: white">&#x1F5D1 Löschen</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script th:src="@{/scripts.js}"></script>
+</body>
+</html>
