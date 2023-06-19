@@ -54,18 +54,18 @@ data class MafSample(
 
             return parser.map {
                 MafSimpleVariant(
-                    tumorSampleBarcode = it.get("Tumor_Sample_Barcode"),
-                    hugoSymbol = it.get("Hugo_Symbol"),
-                    chromosome = "chr${it.get("Chromosome")}",
-                    gene = it.get("Gene"),
-                    startPosition = it.get("Start_Position").toLong(),
-                    endPosition = it.get("End_Position").toLong(),
-                    referenceAllele = it.get("Reference_Allele"),
-                    tumorSeqAllele2 = it.get("Tumor_Seq_Allele2"),
-                    hgvsc = it.get("HGVSc"),
-                    hgvsp = it.get("HGVSp_Short"),
-                    tDepth = it.get("t_depth").toLong(),
-                    dbSnpRs = it.get("dbSNP_RS")
+                    tumorSampleBarcode = it["Tumor_Sample_Barcode"],
+                    hugoSymbol = it["Hugo_Symbol"],
+                    chromosome = "chr${it["Chromosome"]}",
+                    gene = it["Gene"],
+                    startPosition = it["Start_Position"].toLong(),
+                    endPosition = it["End_Position"].toLong(),
+                    referenceAllele = it["Reference_Allele"],
+                    tumorSeqAllele2 = it["Tumor_Seq_Allele2"],
+                    hgvsc = it["HGVSc"],
+                    hgvsp = it["HGVSp_Short"],
+                    tDepth = it["t_depth"].toLong(),
+                    dbSnpRs = it["dbSNP_RS"]
                 )
             }.groupBy { it.tumorSampleBarcode }.map {
                 MafSample(null, it.key, AggregateReference.to(uploadId), it.value.toSet())
