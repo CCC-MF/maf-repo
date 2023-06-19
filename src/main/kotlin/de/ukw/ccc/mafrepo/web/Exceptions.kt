@@ -24,4 +24,6 @@
 
 package de.ukw.ccc.mafrepo.web
 
+class BadRequestException : RuntimeException()
+
 class NotFoundException : RuntimeException()

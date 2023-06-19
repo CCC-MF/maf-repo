@@ -32,6 +32,12 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @ControllerAdvice
 class MvcControllerAdvice {
 
+    @ExceptionHandler(BadRequestException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleBadRequestException(e: BadRequestException): String {
+        return "errors/400"
+    }
+
     @ExceptionHandler(NotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleNotFoundException(e: NotFoundException): String {

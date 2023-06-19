@@ -51,7 +51,13 @@ class UploadController(
         val upload = MafUpload(filename = file.originalFilename.orEmpty(), content = file.bytes.decodeToString())
         val savedUpload = mafUploadRepository.save(upload)
         if (null != savedUpload.id) {
-            mafSampleRepository.saveAll(MafSample.map(savedUpload.id, file.inputStream))
+            try {
+                mafSampleRepository.saveAll(MafSample.map(savedUpload.id, file.inputStream))
+            } catch (e: Exception) {
+                // cleanup
+                mafUploadRepository.delete(savedUpload)
+                return "errors/400"
+            }
         }
         return "redirect:/"
     }
