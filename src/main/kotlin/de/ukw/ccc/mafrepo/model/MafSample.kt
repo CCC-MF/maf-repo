@@ -76,4 +76,6 @@ data class MafSample(
 
 interface MafSampleRepository : CrudRepository<MafSample, MafSampleId> {
     fun findAllByUpload(uploadId: AggregateReference<MafUpload, MafUploadId>): Iterable<MafSample>
+
+    fun findAllByTumorSampleBarcodeLikeIgnoreCase(tumorSampleBarcode: String): List<MafSample>
 }
