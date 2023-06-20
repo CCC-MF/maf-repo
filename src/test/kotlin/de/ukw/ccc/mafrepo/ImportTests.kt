@@ -24,23 +24,22 @@
 
 package de.ukw.ccc.mafrepo
 
-import de.ukw.ccc.mafrepo.model.MafSimpleVariant
+import de.ukw.ccc.mafrepo.model.MafSample
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.core.io.ClassPathResource
-import org.springframework.data.jdbc.core.mapping.AggregateReference
 
 @ExtendWith(MockitoExtension::class)
 class ImportTests {
 
     @Test
     fun testShouldParse() {
-        val actual = MafSimpleVariant.map(ClassPathResource("example.csv").inputStream, AggregateReference.to(0))
+        val actual = MafSample.map(1, ClassPathResource("example.csv").inputStream)
         assertThat(actual).hasSize(3)
 
-        assertThat(actual[0].getOrNull()?.hugoSymbol).isEqualTo("MITF")
+        assertThat(actual.first().simpleVariants.first().hugoSymbol).isEqualTo("MITF")
 
         println(actual)
     }
