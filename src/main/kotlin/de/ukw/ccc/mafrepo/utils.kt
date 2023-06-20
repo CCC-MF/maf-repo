@@ -27,7 +27,7 @@ package de.ukw.ccc.mafrepo
 import java.util.*
 
 fun String.normalizedTumorSampleBarcode(): Optional<String> {
-    val normalizedRegex = "[EHNRZ]/\\d+/\\d{4}".toRegex()
+    val normalizedRegex = "[EHNRZ]/20\\d{2}/\\d+".toRegex()
     val otherRegex = "([EHNRZ])(\\d+)-(\\d{2})_?(RNA|DNA)?".toRegex()
 
     if (this matches normalizedRegex) {
