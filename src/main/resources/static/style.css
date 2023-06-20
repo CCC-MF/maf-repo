@@ -44,6 +44,41 @@ td, th {
     white-space: nowrap;
 }
 
+.btn {
+    vertical-align: middle;
+
+    border: 0 solid transparent;
+    border-radius: 3px;
+
+    cursor: pointer;
+}
+
+.btn:hover {
+    filter: drop-shadow(1px 2px 2px gray);
+}
+
+.btn:active {
+    filter: drop-shadow(1px 1px 2px gray);
+    translate: 0 1px;
+}
+
+.btn.btn-red {
+    margin: 4px;
+    padding: 4px 8px;
+
+    background: red;
+    color: white;
+}
+
+.btn.btn-red:hover, .btn.btn-red:active {
+    background: darkred !important;
+}
+
+.btn.btn-delete:before {
+    content: '\1F5D1';
+    margin: 0 .2rem;
+}
+
 input.inline {
     border: none;
     font-size: medium;
