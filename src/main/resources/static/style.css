@@ -22,8 +22,13 @@
  * SOFTWARE.
  */
 
+html {
+    font-family: sans-serif;
+}
+
 table {
-    border: 1px solid gray;
+    border-top: 1px solid lightgray;
+    border-left: 1px solid lightgray;
     border-spacing: 0;
 
     min-width: 100%;
@@ -42,6 +47,16 @@ td, th {
 
     text-align: left;
     white-space: nowrap;
+}
+
+td.bg-green, th.bg-green {
+    background: darkgreen;
+    color: white;
+}
+
+td.bg-yellow, th.bg-yellow {
+    background: darkorange;
+    color: white;
 }
 
 .btn {

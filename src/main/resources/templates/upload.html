@@ -39,8 +39,8 @@
                 </thead>
                 <tbody>
                 <tr th:each="simpleVariant : ${sample.simpleVariants}">
-                    <td th:if="${simpleVariant.isValid()}" style="color: white; background: darkgreen; text-align: center">✓</td>
-                    <td th:if="not ${simpleVariant.isValid()}" style="color: white; background: darkorange; text-align: center">⚠</td>
+                    <td th:if="${simpleVariant.isValid()}" class="bg-green" style="text-align: center">✓</td>
+                    <td th:if="not ${simpleVariant.isValid()}" class="bg-yellow" style="text-align: center">⚠</td>
                     <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
                     <td th:id="'modified_' + ${simpleVariant.id}">[[ ${#temporals.format(simpleVariant.modifiedAt, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
                     <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
