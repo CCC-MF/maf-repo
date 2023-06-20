@@ -24,6 +24,7 @@
 
 package de.ukw.ccc.mafrepo.web
 
+import de.ukw.ccc.mafrepo.Genenames
 import de.ukw.ccc.mafrepo.model.*
 import org.springframework.data.jdbc.core.mapping.AggregateReference
 import org.springframework.data.repository.findByIdOrNull
@@ -37,7 +38,8 @@ import org.springframework.web.multipart.MultipartFile
 @Controller
 class UploadController(
     private val mafUploadRepository: MafUploadRepository,
-    private val mafSampleRepository: MafSampleRepository
+    private val mafSampleRepository: MafSampleRepository,
+    private val genenames: Genenames
 ) {
 
     @GetMapping(path = ["/"])
@@ -52,7 +54,16 @@ class UploadController(
         val savedUpload = mafUploadRepository.save(upload)
         if (null != savedUpload.id) {
             try {
-                mafSampleRepository.saveAll(MafSample.map(savedUpload.id, file.inputStream))
+                val prepared = MafSample.map(savedUpload.id, file.inputStream).onEach { sample ->
+                    sample.simpleVariants.onEach { simpleVariant ->
+                        genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent {
+                            simpleVariant.geneName = it.name
+                            simpleVariant.hgncId = it.hgncId
+                            simpleVariant.cosmicId = it.cosmic.orEmpty()
+                        }
+                    }
+                }
+                mafSampleRepository.saveAll(prepared)
             } catch (e: Exception) {
                 // cleanup
                 mafUploadRepository.delete(savedUpload)

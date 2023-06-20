@@ -57,6 +57,8 @@ data class MafSimpleVariant(
     var cosmicId: String = "",
     var interpretation: String = "",
     var active: Boolean = false,
+    var hgncId: String? = null,
+    var geneName: String? = null,
     @LastModifiedDate var modifiedAt: LocalDateTime? = null,
     @Version var version: Int = 0
 ) {

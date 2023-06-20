@@ -33,6 +33,8 @@ CREATE TABLE IF NOT EXISTS simple_variant
     allelic_frequency    varchar(255) default ''    not null,
     cosmic_id            varchar(255) default ''    not null,
     interpretation       varchar(255) default ''    not null,
+    gene_name            varchar(255),
+    hgnc_id              varchar(255),
     modified_at          timestamp,
     version              int,
     active               boolean      default false not null,
