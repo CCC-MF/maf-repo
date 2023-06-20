@@ -15,6 +15,7 @@
                 <thead>
                 <tr>
                     <th></th>
+                    <th>Aktiv</th>
                     <th>Letzte Änderung</th>
                     <th>TUMOR_SAMPLE_BARCODE</th>
                     <th>HUGO_SYMBOL</th>
@@ -37,7 +38,8 @@
                 <tr th:each="simpleVariant : ${sample.simpleVariants}">
                     <td th:if="${simpleVariant.isValid()}" style="color: white; background: darkgreen; text-align: center">✓</td>
                     <td th:if="not ${simpleVariant.isValid()}" style="color: white; background: darkorange; text-align: center">⚠</td>
-                    <td>[[ ${#temporals.format(simpleVariant.modificationTime, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
+                    <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
+                    <td th:id="'modified_' + ${simpleVariant.id}">[[ ${#temporals.format(simpleVariant.modifiedAt, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
                     <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
                     <td>[[ ${simpleVariant.hugoSymbol} ]]</td>
                     <td>[[ ${simpleVariant.chromosome} ]]</td>
@@ -52,11 +54,12 @@
                     <td>[[ ${simpleVariant.dbSnpRs} ]]</td>
                     <td>[[ ${simpleVariant.allelicFrequency} ]]</td>
                     <td>[[ ${simpleVariant.cosmicId} ]]</td>
-                    <td>[[ ${simpleVariant.interpretation} ]]</td>
+                    <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <script th:src="@{/scripts.js}"></script>
 </body>
 </html>

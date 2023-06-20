@@ -41,5 +41,16 @@ td, th {
     border-bottom: 1px solid lightgray;
 
     text-align: left;
+    white-space: nowrap;
+}
+
+input.inline {
+    border: none;
+    font-size: medium;
+    outline: none;
+}
+
+input.inline:focus-visible {
+    background: lightgreen;
 }
 

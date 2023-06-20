@@ -29,3 +29,21 @@ function deleteUpload(id) {
        document.getElementById(`upload_${id}`).remove();
     });
 }
+
+function onChangedActive(id, value) {
+    fetch(`/simplevariant/${id}/active`, {
+        method: value ? 'PUT' : 'DELETE',
+        body: value
+    }).then(() => {
+        document.getElementById(`modified_${id}`).innerText = 'gerade eben'
+    });
+}
+
+function onChangedInterpretation(id, value) {
+    fetch(`/simplevariant/${id}/interpretation`, {
+        method: 'PUT',
+        body: value
+    }).then(() => {
+        document.getElementById(`modified_${id}`).innerText = 'gerade eben'
+    });
+}

@@ -26,11 +26,21 @@ package de.ukw.ccc.mafrepo.model
 
 import de.ukw.ccc.mafrepo.normalizedTumorSampleBarcode
 import org.apache.commons.codec.digest.DigestUtils
+import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.annotation.Version
+import org.springframework.data.jdbc.repository.query.Modifying
+import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Table
+import org.springframework.data.repository.Repository
 import java.time.LocalDateTime
+import java.util.*
+
+typealias MafSimpleVariantId = Long
 
 @Table("simple_variant")
 data class MafSimpleVariant(
+    @Id val id: MafSimpleVariantId? = null,
     val tumorSampleBarcode: String,
     val hugoSymbol: String,
     val chromosome: String,
@@ -46,17 +56,33 @@ data class MafSimpleVariant(
     var allelicFrequency: Long = 0,
     var cosmicId: String = "",
     var interpretation: String = "",
-    var modificationTime: LocalDateTime? = null,
+    var active: Boolean = false,
+    @LastModifiedDate var modifiedAt: LocalDateTime? = null,
+    @Version var version: Int = 0
 ) {
 
     fun hash(): String {
         return DigestUtils.sha256Hex(
-            this.copy(modificationTime = null).toString()
+            this.copy(modifiedAt = null).toString()
         )
     }
 
     fun isValid(): Boolean {
         return this.tumorSampleBarcode.normalizedTumorSampleBarcode().isPresent
     }
+
+}
+
+interface MafSimpleVariantRepository : Repository<MafSimpleVariant, MafSimpleVariantId> {
+
+    fun findById(id: MafSimpleVariantId): Optional<MafSimpleVariant>
+
+    @Modifying
+    @Query("UPDATE simple_variant SET active=:value, modified_at=NOW() WHERE id=:id")
+    fun updateActiveById(id: MafSimpleVariantId, value: Boolean)
+
+    @Modifying
+    @Query("UPDATE simple_variant SET interpretation=:value, modified_at=NOW() WHERE id=:id")
+    fun updateInterpretationById(id: MafSimpleVariantId, value: String)
 
 }
