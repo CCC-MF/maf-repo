@@ -26,7 +26,10 @@ function deleteUpload(id) {
     fetch(`/uploads/${id}`, {
         method: 'DELETE'
     }).then(() => {
-       document.getElementById(`upload_${id}`).remove();
+        document.getElementById(`upload_${id}`).remove();
+        if (document.querySelector('#upload_table tbody').children.length === 0) {
+            document.getElementById(`upload_table`).remove();
+        }
     });
 }
 

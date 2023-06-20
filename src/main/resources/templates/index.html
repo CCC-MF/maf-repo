@@ -15,7 +15,7 @@
     </form>
 
     <div th:if="not ${uploads.isEmpty()}">
-        <table>
+        <table id="upload_table">
             <thead>
             <tr>
                 <th>Dateiname</th>
@@ -30,7 +30,7 @@
                 <td>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss')} ]]</td>
                 <td><a th:href="@{/uploads/{id}(id=${upload.id})}">[[ @{/uploads/{id}(id=${upload.id})} ]]</a></td>
                 <td>
-                    <button title="Löschen" th:data-id="${upload.id}" onclick="deleteUpload(this.dataset['id'])" style="background: red; color: white">&#x1F5D1 Löschen</button>
+                    <button title="Löschen" class="btn btn-red btn-delete" th:data-id="${upload.id}" onclick="deleteUpload(this.dataset['id'])">Löschen</button>
                 </td>
             </tr>
             </tbody>
