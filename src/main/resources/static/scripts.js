@@ -30,6 +30,14 @@ function deleteUpload(id) {
     });
 }
 
+function deleteSample(id) {
+    fetch(`/samples/${id}`, {
+        method: 'DELETE'
+    }).then(() => {
+        document.getElementById(`sample_${id}`).remove();
+    });
+}
+
 function onChangedActive(id, value) {
     fetch(`/simplevariant/${id}/active`, {
         method: value ? 'PUT' : 'DELETE',

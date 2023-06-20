@@ -28,10 +28,7 @@ import de.ukw.ccc.mafrepo.model.MafSample
 import de.ukw.ccc.mafrepo.model.MafSampleId
 import de.ukw.ccc.mafrepo.model.MafSampleRepository
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -42,6 +39,11 @@ class SampleRestController(
     @GetMapping(path = ["samples/{id}"])
     fun getSample(@PathVariable id: MafSampleId): ResponseEntity<MafSample> {
         return ResponseEntity.of(mafSampleRepository.findById(id))
+    }
+
+    @DeleteMapping(path = ["samples/{id}"])
+    fun deleteSample(@PathVariable id: MafSampleId) {
+        mafSampleRepository.deleteById(id)
     }
 
     @GetMapping(path = ["samples"])
