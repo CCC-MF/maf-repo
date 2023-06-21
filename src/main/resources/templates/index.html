@@ -13,7 +13,7 @@
                 <h1>Suche nach Proben</h1>
                 <div>
                     &nbsp;&nbsp;
-                    <input name="l" size="1" style="width: 2rem" pattern="[EHNRZ]" maxlength="1" th:value="${param.l}" required/>
+                    <input name="l" size="1" style="width: 2rem" pattern="[EHNRZ]" maxlength="1" th:value="${param.l}" onkeydown="this.value = this.value.toUpperCase();" autofocus required/>
                     &sol;
                     &nbsp;&nbsp;&nbsp;20
                     <input name="y" size="2" style="width: 2rem" pattern="\d+" maxlength="2" th:value="${param.y}" required />
