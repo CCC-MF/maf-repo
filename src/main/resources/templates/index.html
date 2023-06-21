@@ -6,36 +6,89 @@
     <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-    <h1>Einträge</h1>
-    <form method="post" th:action="@{/uploads}" enctype="multipart/form-data">
+    <div th:replace="fragments.html :: nav"></div>
+    <main>
         <div>
-            <input type="file" name="file" />
-            <button type="submit">Absenden</button>
+            <form class="samplecode-input" method="get" th:action="@{/}">
+                <h1>Suche nach Proben</h1>
+                <div>
+                    &nbsp;&nbsp;
+                    <input name="l" size="1" style="width: 2rem" pattern="[EHNRZ]" maxlength="1" th:value="${param.l}" required/>
+                    &sol;
+                    &nbsp;&nbsp;&nbsp;20
+                    <input name="y" size="2" style="width: 2rem" pattern="\d+" maxlength="2" th:value="${param.y}" required />
+                    &sol;&nbsp;&nbsp;
+                    <input name="s" style="width: 8rem" type="number" th:value="${param.s}" required />
+                    &nbsp;
+                    <button class="btn btn-blue" type="submit">Suchen</button>
+                </div>
+            </form>
         </div>
-    </form>
 
-    <div th:if="not ${uploads.isEmpty()}">
-        <table id="upload_table">
-            <thead>
-            <tr>
-                <th>Dateiname</th>
-                <th>Hochgeladen am</th>
-                <th>Link</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="upload : ${uploads}" th:id="'upload_' + ${upload.id}">
-                <td>[[ ${upload.filename} ]]</td>
-                <td>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss', 'Europe/Berlin')} ]]</td>
-                <td><a th:href="@{/uploads/{id}(id=${upload.id})}">[[ @{/uploads/{id}(id=${upload.id})} ]]</a></td>
-                <td>
-                    <button title="Löschen" class="btn btn-red btn-delete" th:data-id="${upload.id}" onclick="deleteUpload(this.dataset['id'])">Löschen</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <h2>Einfache Varianten</h2>
+        <div th:if="${simpleVariants == null || simpleVariants.isEmpty()}">
+            <p>
+                <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion.</strong>
+            </p>
+        </div>
+        <div th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
+            <table class="samples">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Aktiv</th>
+                    <th>Letzte Änderung</th>
+                    <th>TUMOR_SAMPLE_BARCODE</th>
+                    <th>HUGO_SYMBOL</th>
+                    <th>CHROMOSOME</th>
+                    <th>GENE</th>
+                    <th>HGNC-ID</th>
+                    <th>Name</th>
+                    <th>COSMIC_ID</th>
+                    <th>START_POSITION</th>
+                    <th>END_POSITION</th>
+                    <th>REFERENCE_ALLELE</th>
+                    <th>TUMOR_SEQ_ALLELE2</th>
+                    <th>HGVSc</th>
+                    <th>HGVSp_short</th>
+                    <th>t_depth</th>
+                    <th>DBSNPRS</th>
+                    <th>ALLELIC_FREQUENCY</th>
+                    <th>Interpretation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="simpleVariant : ${simpleVariants}">
+                    <td th:if="${simpleVariant.isValid()}" class="bg-green" style="text-align: center">✓</td>
+                    <td th:if="not ${simpleVariant.isValid()}" class="bg-yellow" style="text-align: center">⚠</td>
+                    <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
+                    <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">[[ ${#temporals.format(simpleVariant.modifiedAt, 'dd.MM.YYYY HH:mm:ss', 'Europe/Berlin')} ]]</td>
+                    <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
+                    <td>[[ ${simpleVariant.hugoSymbol} ]]</td>
+                    <td>[[ ${simpleVariant.chromosome} ]]</td>
+                    <td>
+                        <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>
+                    </td>
+                    <td class="bg-shaded">[[ ${simpleVariant.hgncId} ]]</td>
+                    <td class="bg-shaded">[[ ${simpleVariant.geneName} ]]</td>
+                    <td class="bg-shaded">
+                        <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
+                    </td>
+                    <td>[[ ${simpleVariant.startPosition} ]]</td>
+                    <td>[[ ${simpleVariant.endPosition} ]]</td>
+                    <td>[[ ${simpleVariant.referenceAllele} ]]</td>
+                    <td>[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
+                    <td>[[ ${simpleVariant.hgvsc} ]]</td>
+                    <td>[[ ${simpleVariant.hgvsp} ]]</td>
+                    <td>[[ ${simpleVariant.tDepth} ]]</td>
+                    <td>[[ ${simpleVariant.dbSnpRs} ]]</td>
+                    <td>[[ ${simpleVariant.allelicFrequency} ]]</td>
+                    <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
     <script th:src="@{/scripts.js}"></script>
 </body>

@@ -42,10 +42,10 @@ class UploadController(
     private val genenames: Genenames
 ) {
 
-    @GetMapping(path = ["/"])
+    @GetMapping(path = ["/uploads"])
     fun index(model: Model): String {
         model.addAttribute("uploads", mafUploadRepository.findAllByOrderByCreatedAtDesc())
-        return "index"
+        return "uploads"
     }
 
     @PostMapping(path = ["/uploads"])
@@ -70,7 +70,7 @@ class UploadController(
                 return "errors/400"
             }
         }
-        return "redirect:/"
+        return "redirect:/uploads"
     }
 
     @GetMapping(path = ["/uploads/{id}"])

@@ -58,3 +58,11 @@ function onChangedInterpretation(id, value) {
         document.getElementById(`modified_${id}`).innerText = 'gerade eben'
     });
 }
+
+function onCodeInputChange() {
+    let letter = document.getElementById('code-letter').value;
+    let year = document.getElementById('code-year').value;
+    let number = document.getElementById('code-number').value;
+    document.getElementById('code').value = `${letter}/20${year}/${number}`;
+    console.log(`${letter}/20${year}/${number}`);
+}

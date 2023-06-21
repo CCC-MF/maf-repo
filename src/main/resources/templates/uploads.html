@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+    <div th:replace="fragments.html :: nav"></div>
+    <div class="breadcrumps">
+        <ul>
+            <li>Uploads</li>
+        </ul>
+    </div>
+    <main>
+        <h1>Einträge</h1>
+        <div>
+            <form method="post" th:action="@{/uploads}" enctype="multipart/form-data">
+                <h2>Datei hochladen</h2>
+                <div>
+                    <input type="file" name="file" />
+                    <button class="btn btn-blue" type="submit">Absenden</button>
+                </div>
+            </form>
+        </div>
+
+        <div th:if="not ${uploads.isEmpty()}">
+            <table id="upload_table">
+                <thead>
+                <tr>
+                    <th>Dateiname</th>
+                    <th>Hochgeladen am</th>
+                    <th>Link</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="upload : ${uploads}" th:id="'upload_' + ${upload.id}">
+                    <td>[[ ${upload.filename} ]]</td>
+                    <td>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss', 'Europe/Berlin')} ]]</td>
+                    <td><a th:href="@{/uploads/{id}(id=${upload.id})}">[[ @{/uploads/{id}(id=${upload.id})} ]]</a></td>
+                    <td>
+                        <button title="Löschen" class="btn btn-red btn-delete" th:data-id="${upload.id}" onclick="deleteUpload(this.dataset['id'])">Löschen</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script th:src="@{/scripts.js}"></script>
+</body>
+</html>

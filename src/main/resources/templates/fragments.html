@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+    <div th:fragment="nav">
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Suche</a></li>
+                <li><a th:href="@{/uploads}">Uploads</a></li>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
