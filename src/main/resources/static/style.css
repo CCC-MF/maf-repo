@@ -224,6 +224,10 @@ td.clipboard.clipped {
     border: 0 solid transparent;
     border-radius: 3px;
 
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: normal;
+
     cursor: pointer;
 }
 

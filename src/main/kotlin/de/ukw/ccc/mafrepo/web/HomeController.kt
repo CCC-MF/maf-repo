@@ -24,17 +24,12 @@
 
 package de.ukw.ccc.mafrepo.web
 
-import de.ukw.ccc.mafrepo.Genenames
-import de.ukw.ccc.mafrepo.model.*
-import org.springframework.data.jdbc.core.mapping.AggregateReference
-import org.springframework.data.repository.findByIdOrNull
+import de.ukw.ccc.mafrepo.model.MafSimpleVariantRepository
+import de.ukw.ccc.mafrepo.normalizedTumorSampleBarcode
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.multipart.MultipartFile
 
 @Controller
 class HomeController(
@@ -46,11 +41,16 @@ class HomeController(
         @RequestParam(required = false, defaultValue = "") l: String,
         @RequestParam(required = false, defaultValue = "0") y: Int,
         @RequestParam(required = false, defaultValue = "0") s: Int,
+        @RequestParam(required = false, defaultValue = "") code: String,
         model: Model
     ): String {
         if (l.isNotBlank() && y > 0 && s > 0) {
-            val code = "$l/20$y/$s"
-            model.addAttribute("simpleVariants", mafSimpleVariantRepository.findAllByTumorSampleBarcode(code))
+            val c = "$l/20$y/$s"
+            model.addAttribute("simpleVariants", mafSimpleVariantRepository.findAllByTumorSampleBarcode(c))
+        } else if (code.normalizedTumorSampleBarcode().isPresent) {
+            val (l, year, s) = code.split('/')
+            val y = year.subSequence(2, 4)
+            return "redirect:/?l=$l&y=$y&s=$s"
         }
         return "index"
     }
