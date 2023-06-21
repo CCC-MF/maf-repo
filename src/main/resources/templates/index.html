@@ -13,12 +13,12 @@
                 <h1>Suche nach Proben</h1>
                 <div>
                     &nbsp;&nbsp;
-                    <input name="l" size="1" style="width: 2rem" pattern="[EHNRZ]" maxlength="1" th:value="${param.l}" onkeydown="this.value = this.value.toUpperCase();" autofocus required/>
+                    <input class="monospace" name="l" size="1" style="width: 1.6rem; text-align: center" pattern="[EHNRZ]" maxlength="1" th:value="${param.l}" onkeydown="this.value = this.value.toUpperCase();" autofocus required/>
                     &sol;
                     &nbsp;&nbsp;&nbsp;20
-                    <input name="y" size="2" style="width: 2rem" pattern="\d+" maxlength="2" th:value="${param.y}" required />
+                    <input class="monospace" name="y" size="2" style="width: 2rem; text-align: center" pattern="\d+" maxlength="2" th:value="${param.y}" required />
                     &sol;&nbsp;&nbsp;
-                    <input name="s" style="width: 8rem" type="number" th:value="${param.s}" required />
+                    <input class="monospace" name="s" style="width: 8rem" type="number" th:value="${param.s}" required />
                     &nbsp;
                     <button class="btn btn-blue" type="submit">Suchen</button>
                 </div>
@@ -28,7 +28,7 @@
         <h2>Einfache Varianten</h2>
         <div th:if="${simpleVariants == null || simpleVariants.isEmpty()}">
             <p>
-                <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion.</strong>
+                <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion um Proben anhand der Einsendenummer zu finden.</strong>
             </p>
         </div>
         <div th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
