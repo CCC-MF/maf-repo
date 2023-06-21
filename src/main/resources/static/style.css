@@ -158,16 +158,6 @@ table {
     min-height: 100vh;
 }
 
-#samples-table table .resize::after {
-    content: "\21F1";
-    cursor: nw-resize;
-}
-
-#samples-table.max table .resize::after {
-    content: "\21A7";
-    cursor: s-resize;
-}
-
 table.samples {
     max-width: 100%;
     overflow-x: scroll;

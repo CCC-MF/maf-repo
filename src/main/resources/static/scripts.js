@@ -45,12 +45,14 @@ window.onload = () => {
         });
     });
 
-    document.getElementById('samples-resize').addEventListener('click', () => {
-        let element = document.getElementById('samples-table')
-        if (element.classList.contains('max')) {
-            element.classList.remove('max');
-        } else {
-            element.classList.add('max');
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F' && e.altKey && e.shiftKey) {
+            let element = document.getElementById('samples-table')
+            if (element && element.classList.contains('max')) {
+                element.classList.remove('max');
+            } else if (element) {
+                element.classList.add('max');
+            }
         }
     });
 };

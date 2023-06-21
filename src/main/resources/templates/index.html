@@ -25,70 +25,72 @@
             </form>
         </div>
 
-        <h2>Einfache Varianten</h2>
-        <div th:if="${simpleVariants == null || simpleVariants.isEmpty()}">
-            <p>
-                <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion um Proben anhand der Einsendenummer zu finden.</strong>
-            </p>
-        </div>
-        <div id="samples-table" th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
-            <table class="samples">
-                <thead>
-                <tr>
-                    <th id="samples-resize" class="resize"></th>
-                    <th>Aktiv</th>
-                    <th>Letzte Änderung</th>
-                    <th>TUMOR_SAMPLE_BARCODE</th>
-                    <th>HUGO_SYMBOL</th>
-                    <th>CHROMOSOME</th>
-                    <th>GENE</th>
-                    <th>HGNC-ID</th>
-                    <th>Name</th>
-                    <th>COSMIC_ID</th>
-                    <th>START_POSITION</th>
-                    <th>END_POSITION</th>
-                    <th>REFERENCE_ALLELE</th>
-                    <th>TUMOR_SEQ_ALLELE2</th>
-                    <th>HGVSc</th>
-                    <th>HGVSp_short</th>
-                    <th>t_depth</th>
-                    <th>DBSNPRS</th>
-                    <th>ALLELIC_FREQUENCY</th>
-                    <th>Interpretation</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="simpleVariant : ${simpleVariants}">
-                    <td th:if="${simpleVariant.isValid()}" class="bg-green" style="text-align: center">✓</td>
-                    <td th:if="not ${simpleVariant.isValid()}" class="bg-yellow" style="text-align: center">⚠</td>
-                    <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
-                    <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">
-                        <time th:datetime="${simpleVariant.modifiedAt}">[[ ${simpleVariant.modifiedAt} ]]</time>
-                    </td>
-                    <td class="clipboard">[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.hugoSymbol} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
-                    <td class="clipboard">
-                        <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>
-                    </td>
-                    <td class="bg-shaded clipboard">[[ ${simpleVariant.hgncId} ]]</td>
-                    <td class="bg-shaded clipboard">[[ ${simpleVariant.geneName} ]]</td>
-                    <td class="bg-shaded clipboard">
-                        <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
-                    </td>
-                    <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.endPosition} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.referenceAllele} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.hgvsc} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.hgvsp} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.tDepth} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.dbSnpRs} ]]</td>
-                    <td class="clipboard">[[ ${simpleVariant.allelicFrequency} ]]</td>
-                    <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
-                </tr>
-                </tbody>
-            </table>
+        <div id="samples-table">
+            <h2>Einfache Varianten</h2>
+            <div th:if="${simpleVariants == null || simpleVariants.isEmpty()}">
+                <p>
+                    <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion um Proben anhand der Einsendenummer zu finden.</strong>
+                </p>
+            </div>
+            <div th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
+                <table class="samples">
+                    <thead>
+                    <tr>
+                        <th id="samples-resize" class="resize"></th>
+                        <th>Aktiv</th>
+                        <th>Letzte Änderung</th>
+                        <th>TUMOR_SAMPLE_BARCODE</th>
+                        <th>HUGO_SYMBOL</th>
+                        <th>CHROMOSOME</th>
+                        <th>GENE</th>
+                        <th>HGNC-ID</th>
+                        <th>Name</th>
+                        <th>COSMIC_ID</th>
+                        <th>START_POSITION</th>
+                        <th>END_POSITION</th>
+                        <th>REFERENCE_ALLELE</th>
+                        <th>TUMOR_SEQ_ALLELE2</th>
+                        <th>HGVSc</th>
+                        <th>HGVSp_short</th>
+                        <th>t_depth</th>
+                        <th>DBSNPRS</th>
+                        <th>ALLELIC_FREQUENCY</th>
+                        <th>Interpretation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="simpleVariant : ${simpleVariants}">
+                        <td th:if="${simpleVariant.isValid()}" class="bg-green" style="text-align: center">✓</td>
+                        <td th:if="not ${simpleVariant.isValid()}" class="bg-yellow" style="text-align: center">⚠</td>
+                        <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
+                        <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">
+                            <time th:datetime="${simpleVariant.modifiedAt}">[[ ${simpleVariant.modifiedAt} ]]</time>
+                        </td>
+                        <td class="clipboard">[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.hugoSymbol} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
+                        <td class="clipboard">
+                            <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>
+                        </td>
+                        <td class="bg-shaded clipboard">[[ ${simpleVariant.hgncId} ]]</td>
+                        <td class="bg-shaded clipboard">[[ ${simpleVariant.geneName} ]]</td>
+                        <td class="bg-shaded clipboard">
+                            <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
+                        </td>
+                        <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.endPosition} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.referenceAllele} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.hgvsc} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.hgvsp} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.tDepth} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.dbSnpRs} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.allelicFrequency} ]]</td>
+                        <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 

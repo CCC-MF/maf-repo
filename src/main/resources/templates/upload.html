@@ -14,13 +14,13 @@
         </ul>
     </div>
     <main>
-        <h1>
-            MAF-Datei <span class="monospace">[[ ${upload.filename} ]]</span> vom
-            <time class="monospace" th:datetime="${upload.createdAt}">[[ ${upload.createdAt} ]]</time>
-        </h1>
+        <div id="samples-table">
+            <h1>
+                MAF-Datei <span class="monospace">[[ ${upload.filename} ]]</span> vom
+                <time class="monospace" th:datetime="${upload.createdAt}">[[ ${upload.createdAt} ]]</time>
+            </h1>
 
-        <div th:each="sample : ${samples}">
-            <div th:id="'sample_' + ${sample.id}" th:if="not ${sample.simpleVariants.isEmpty()}">
+            <div th:id="'sample_' + ${sample.id}" th:if="not ${sample.simpleVariants.isEmpty()}" th:each="sample : ${samples}">
                 <h3>
                     Einsendenummer: <span class="monospace">[[ ${sample.tumorSampleBarcode} ]]</span>
                     <a class="btn btn-blue" title="Suche" th:href="@{/(code=${sample.tumorSampleBarcode})}">Nach Einsendenummer suchen</a>
