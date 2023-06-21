@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS upload
 (
     id         int auto_increment primary key,
-    filename   varchar(255)                           not null,
-    created_at timestamp  default current_timestamp() not null,
-    content    mediumtext default ''                  not null
+    filename   varchar(255)                       not null,
+    created_at datetime   default utc_timestamp() not null,
+    content    mediumtext default ''              not null
 );
 
 CREATE TABLE IF NOT EXISTS sample
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS simple_variant
     interpretation       varchar(255) default ''    not null,
     gene_name            varchar(255),
     hgnc_id              varchar(255),
-    modified_at          timestamp,
+    modified_at          datetime,
     version              int,
     active               boolean      default false not null,
     CONSTRAINT fk_sample FOREIGN KEY (sample) REFERENCES sample (id) ON UPDATE RESTRICT ON DELETE CASCADE

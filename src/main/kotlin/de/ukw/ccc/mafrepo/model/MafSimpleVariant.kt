@@ -33,7 +33,7 @@ import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.data.repository.Repository
-import java.time.LocalDateTime
+import java.time.Instant
 import java.util.*
 
 typealias MafSimpleVariantId = Long
@@ -59,7 +59,7 @@ data class MafSimpleVariant(
     var active: Boolean = false,
     var hgncId: String? = null,
     var geneName: String? = null,
-    @LastModifiedDate var modifiedAt: LocalDateTime? = null,
+    @LastModifiedDate var modifiedAt: Instant? = null,
     @Version var version: Int = 0
 ) {
 
@@ -80,11 +80,11 @@ interface MafSimpleVariantRepository : Repository<MafSimpleVariant, MafSimpleVar
     fun findById(id: MafSimpleVariantId): Optional<MafSimpleVariant>
 
     @Modifying
-    @Query("UPDATE simple_variant SET active=:value, modified_at=NOW(), version=version+1 WHERE id=:id")
+    @Query("UPDATE simple_variant SET active=:value, modified_at=utc_timestamp(), version=version+1 WHERE id=:id")
     fun updateActiveById(id: MafSimpleVariantId, value: Boolean)
 
     @Modifying
-    @Query("UPDATE simple_variant SET interpretation=:value, modified_at=NOW(), version=version+1 WHERE id=:id")
+    @Query("UPDATE simple_variant SET interpretation=:value, modified_at=utc_timestamp(), version=version+1 WHERE id=:id")
     fun updateInterpretationById(id: MafSimpleVariantId, value: String)
 
 }

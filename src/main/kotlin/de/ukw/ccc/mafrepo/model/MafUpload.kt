@@ -28,7 +28,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 import org.springframework.data.repository.CrudRepository
-import java.time.LocalDateTime
+import java.time.Instant
 import java.util.*
 
 typealias MafUploadId = Long
@@ -39,7 +39,7 @@ data class MafUpload(
     val filename: String,
     val content: String,
     @CreatedDate
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: Instant = Instant.now()
 )
 
 interface MafUploadRepository : CrudRepository<MafUpload, MafUploadId> {

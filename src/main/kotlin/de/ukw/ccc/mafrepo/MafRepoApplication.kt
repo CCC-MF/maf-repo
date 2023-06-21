@@ -26,10 +26,12 @@ package de.ukw.ccc.mafrepo
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.util.TimeZone
 
 @SpringBootApplication
 class MafRepoApplication
 
 fun main(args: Array<String>) {
+    TimeZone.setDefault(TimeZone.getTimeZone("GMT"))
     runApplication<MafRepoApplication>(*args)
 }
