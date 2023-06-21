@@ -53,7 +53,7 @@ data class MafSimpleVariant(
     val hgvsp: String,
     val tDepth: Long,
     val dbSnpRs: String,
-    var allelicFrequency: Long = 0,
+    var allelicFrequency: Double = 0.0,
     var cosmicId: String = "",
     var interpretation: String = "",
     var active: Boolean = false,
@@ -71,6 +71,21 @@ data class MafSimpleVariant(
 
     fun isValid(): Boolean {
         return this.tumorSampleBarcode.normalizedTumorSampleBarcode().isPresent
+                && this.tumorSampleBarcode.isNotBlank()
+                && this.hugoSymbol.isNotBlank()
+                && this.gene.isNotBlank()
+                && this.startPosition > 0
+                && this.endPosition >= this.startPosition
+                && this.referenceAllele.isNotBlank()
+                && this.tumorSeqAllele2.isNotBlank()
+                && this.hgvsc.isNotBlank()
+                && this.hgvsp.isNotBlank()
+                && this.tDepth > 0
+                && this.dbSnpRs.isNotBlank()
+                && this.allelicFrequency > 0
+                && this.cosmicId.isNotBlank()
+                && this.hgncId.orEmpty().isNotBlank()
+                && this.geneName.orEmpty().isNotBlank()
     }
 
 }
