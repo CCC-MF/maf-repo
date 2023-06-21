@@ -25,6 +25,13 @@
             </form>
         </div>
 
+        <div class="help error" th:if="${invalidcode}">
+            <div class="help-header">Keine gültige Einsendenummer!</div>
+            <p>
+                Bitte suchen Sie nach einer gültigen Einsendenummer.
+            </p>
+        </div>
+
         <div id="samples-table">
             <h2>Einfache Varianten</h2>
             <div th:if="${simpleVariants == null || simpleVariants.isEmpty()}">

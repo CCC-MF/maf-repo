@@ -39,18 +39,20 @@ class HomeController(
     @GetMapping(path = ["/"])
     fun index(
         @RequestParam(required = false, defaultValue = "") l: String,
-        @RequestParam(required = false, defaultValue = "0") y: Int,
-        @RequestParam(required = false, defaultValue = "0") s: Int,
+        @RequestParam(required = false, defaultValue = "") y: String,
+        @RequestParam(required = false, defaultValue = "") s: String,
         @RequestParam(required = false, defaultValue = "") code: String,
         model: Model
     ): String {
-        if (l.isNotBlank() && y > 0 && s > 0) {
-            val c = "$l/20$y/$s"
+        val c = "$l/20$y/$s"
+        if (l.isNotBlank() && y.toIntOrNull() != null && s.toIntOrNull() != null && y.toIntOrNull()!! > 0 && s.toIntOrNull()!! > 0) {
             model.addAttribute("simpleVariants", mafSimpleVariantRepository.findAllByTumorSampleBarcode(c))
         } else if (code.normalizedTumorSampleBarcode().isPresent) {
             val (l, year, s) = code.split('/')
             val y = year.subSequence(2, 4)
             return "redirect:/?l=$l&y=$y&s=$s"
+        } else {
+            model.addAttribute("invalidcode", c != "/20/" && !c.normalizedTumorSampleBarcode().isPresent)
         }
         return "index"
     }
