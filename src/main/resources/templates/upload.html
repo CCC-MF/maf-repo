@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-    <div th:replace="fragments.html :: nav"></div>
+    <div th:replace="~{fragments.html :: nav}"></div>
     <div class="breadcrumps">
         <ul >
             <li><a th:href="@{/uploads}">Uploads</a></li>
@@ -14,7 +14,10 @@
         </ul>
     </div>
     <main>
-        <h1>MAF-Datei <span>[[ ${upload.filename} ]]</span> vom <span>[[ ${#temporals.format(upload.createdAt, 'dd.MM.YYYY HH:mm:ss', 'Europe/Berlin')} ]]</span></h1>
+        <h1>
+            MAF-Datei <span>[[ ${upload.filename} ]]</span> vom
+            <time th:datetime="${upload.createdAt}">[[ ${upload.createdAt} ]]</time>
+        </h1>
 
         <div th:each="sample : ${samples}">
             <div th:id="'sample_' + ${sample.id}" th:if="not ${sample.simpleVariants.isEmpty()}">
@@ -52,7 +55,9 @@
                         <td th:if="${simpleVariant.isValid()}" class="bg-green" style="text-align: center">✓</td>
                         <td th:if="not ${simpleVariant.isValid()}" class="bg-yellow" style="text-align: center">⚠</td>
                         <td style="text-align: center"><input type="checkbox" th:checked="${simpleVariant.active}" th:data-id="${simpleVariant.id}" onchange="onChangedActive(this.dataset['id'], this.checked)"></td>
-                        <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">[[ ${#temporals.format(simpleVariant.modifiedAt, 'dd.MM.YYYY HH:mm:ss', 'Europe/Berlin')} ]]</td>
+                        <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">
+                            <time th:datetime="${simpleVariant.modifiedAt}">[[ ${simpleVariant.modifiedAt} ]]</time>
+                        </td>
                         <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
                         <td>[[ ${simpleVariant.hugoSymbol} ]]</td>
                         <td>[[ ${simpleVariant.chromosome} ]]</td>

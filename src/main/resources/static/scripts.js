@@ -22,6 +22,18 @@
  * SOFTWARE.
  */
 
+const dateFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: 'numeric', second: 'numeric' };
+const dateFormat = new Intl.DateTimeFormat('de-DE', dateFormatOptions);
+
+window.onload = () => {
+    Array.from(document.getElementsByTagName('time')).forEach((timeTag) => {
+        let date = Date.parse(timeTag.getAttribute('datetime'));
+        if (! isNaN(date)) {
+            timeTag.innerText = dateFormat.format(date);
+        }
+    });
+};
+
 function deleteUpload(id) {
     fetch(`/uploads/${id}`, {
         method: 'DELETE'
@@ -46,7 +58,7 @@ function onChangedActive(id, value) {
         method: value ? 'PUT' : 'DELETE',
         body: value
     }).then(() => {
-        document.getElementById(`modified_${id}`).innerText = 'gerade eben'
+        document.getElementById(`modified_${id}`).innerText = dateFormat.format(new Date());
     });
 }
 
@@ -55,7 +67,7 @@ function onChangedInterpretation(id, value) {
         method: 'PUT',
         body: value
     }).then(() => {
-        document.getElementById(`modified_${id}`).innerText = 'gerade eben'
+        document.getElementById(`modified_${id}`).innerText = dateFormat.format(new Date());
     });
 }
 
