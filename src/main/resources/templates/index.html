@@ -65,26 +65,26 @@
                     <td th:id="'modified_' + ${simpleVariant.id}" class="bg-shaded">
                         <time th:datetime="${simpleVariant.modifiedAt}">[[ ${simpleVariant.modifiedAt} ]]</time>
                     </td>
-                    <td>[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
-                    <td>[[ ${simpleVariant.hugoSymbol} ]]</td>
-                    <td>[[ ${simpleVariant.chromosome} ]]</td>
-                    <td>
+                    <td class="clipboard">[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.hugoSymbol} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
+                    <td class="clipboard">
                         <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>
                     </td>
-                    <td class="bg-shaded">[[ ${simpleVariant.hgncId} ]]</td>
-                    <td class="bg-shaded">[[ ${simpleVariant.geneName} ]]</td>
-                    <td class="bg-shaded">
+                    <td class="bg-shaded clipboard">[[ ${simpleVariant.hgncId} ]]</td>
+                    <td class="bg-shaded clipboard">[[ ${simpleVariant.geneName} ]]</td>
+                    <td class="bg-shaded clipboard">
                         <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
                     </td>
-                    <td>[[ ${simpleVariant.startPosition} ]]</td>
-                    <td>[[ ${simpleVariant.endPosition} ]]</td>
-                    <td>[[ ${simpleVariant.referenceAllele} ]]</td>
-                    <td>[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
-                    <td>[[ ${simpleVariant.hgvsc} ]]</td>
-                    <td>[[ ${simpleVariant.hgvsp} ]]</td>
-                    <td>[[ ${simpleVariant.tDepth} ]]</td>
-                    <td>[[ ${simpleVariant.dbSnpRs} ]]</td>
-                    <td>[[ ${simpleVariant.allelicFrequency} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.endPosition} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.referenceAllele} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.tumorSeqAllele2} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.hgvsc} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.hgvsp} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.tDepth} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.dbSnpRs} ]]</td>
+                    <td class="clipboard">[[ ${simpleVariant.allelicFrequency} ]]</td>
                     <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
                 </tr>
                 </tbody>

@@ -32,6 +32,18 @@ window.onload = () => {
             timeTag.innerText = dateFormat.format(date);
         }
     });
+
+    Array.from(document.querySelectorAll('.clipboard')).forEach((selected) => {
+        selected.addEventListener('mousedown', (e) => {
+            if (e.button === 0 && e.altKey) {
+                navigator.clipboard.writeText(selected.innerText);
+                selected.classList.add('clipped');
+                setTimeout(() => {
+                    selected.classList.remove('clipped');
+                }, 2000);
+            }
+        });
+    });
 };
 
 function deleteUpload(id) {

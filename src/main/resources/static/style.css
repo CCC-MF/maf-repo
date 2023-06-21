@@ -186,6 +186,14 @@ td.bg-shaded, th.bg-shaded {
     background: repeating-linear-gradient(140deg, white, #e5e5f5 4px, white 8px);
 }
 
+td.clipboard {
+    cursor: copy;
+}
+
+td.clipboard.clipped {
+    box-shadow: 0 0 1rem lightgreen inset;
+}
+
 .btn {
     margin: 4px;
     padding: 4px 8px;
