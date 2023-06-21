@@ -31,11 +31,11 @@
                 <strong>Keine Einträge gefunden. Verwenden Sie die Suchfunktion um Proben anhand der Einsendenummer zu finden.</strong>
             </p>
         </div>
-        <div th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
+        <div id="samples-table" th:if="not ${simpleVariants == null || simpleVariants.isEmpty()}">
             <table class="samples">
                 <thead>
                 <tr>
-                    <th></th>
+                    <th id="samples-resize" class="resize"></th>
                     <th>Aktiv</th>
                     <th>Letzte Änderung</th>
                     <th>TUMOR_SAMPLE_BARCODE</th>

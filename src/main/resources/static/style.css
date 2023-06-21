@@ -148,6 +148,26 @@ table {
     font-family: sans-serif;
 }
 
+#samples-table.max {
+    width: 100vw;
+    position: fixed;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    background: white;
+    min-height: 100vh;
+}
+
+#samples-table table .resize::after {
+    content: "\21F1";
+    cursor: nw-resize;
+}
+
+#samples-table.max table .resize::after {
+    content: "\21A7";
+    cursor: s-resize;
+}
+
 table.samples {
     max-width: 100%;
     overflow-x: scroll;

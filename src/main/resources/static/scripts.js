@@ -44,6 +44,15 @@ window.onload = () => {
             }
         });
     });
+
+    document.getElementById('samples-resize').addEventListener('click', () => {
+        let element = document.getElementById('samples-table')
+        if (element.classList.contains('max')) {
+            element.classList.remove('max');
+        } else {
+            element.classList.add('max');
+        }
+    });
 };
 
 function deleteUpload(id) {
