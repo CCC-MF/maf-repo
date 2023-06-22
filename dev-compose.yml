@@ -7,4 +7,4 @@ services:
       MARIADB_PASSWORD: dev
       MARIADB_ROOT_PASSWORD: dev
     ports:
-      - '3306:3306'
+      - '3306'
