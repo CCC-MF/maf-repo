@@ -48,12 +48,12 @@
                         <th>Letzte Änderung</th>
                         <th>TUMOR_SAMPLE_BARCODE</th>
                         <th>HUGO_SYMBOL</th>
-                        <th>CHROMOSOME</th>
                         <th>GENE</th>
                         <th>HGNC-ID</th>
                         <th>Name</th>
                         <th>COSMIC_ID</th>
-                        <th>NM-Name</th>
+                        <th>NM-Number</th>
+                        <th>CHROMOSOME</th>
                         <th>START_POSITION</th>
                         <th>END_POSITION</th>
                         <th>REFERENCE_ALLELE</th>
@@ -76,7 +76,6 @@
                         </td>
                         <td class="clipboard">[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.hugoSymbol} ]]</td>
-                        <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
                         <td class="clipboard">
                             <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>
                         </td>
@@ -88,6 +87,7 @@
                         <td class="bg-shaded clipboard">
                             <a th:href="@{https://www.ncbi.nlm.nih.gov/nuccore/{id}(id=${simpleVariant.nmNumber})}" target="_blank">[[ ${simpleVariant.nmNumber} ]]</a>
                         </td>
+                        <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.endPosition} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.referenceAllele} ]]</td>
