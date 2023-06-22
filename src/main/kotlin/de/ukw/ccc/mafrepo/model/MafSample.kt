@@ -24,6 +24,7 @@
 
 package de.ukw.ccc.mafrepo.model
 
+import de.ukw.ccc.mafrepo.normalizedTumorSampleBarcode
 import org.apache.commons.csv.CSVFormat
 import org.springframework.data.annotation.Id
 import org.springframework.data.jdbc.core.mapping.AggregateReference
@@ -54,7 +55,7 @@ data class MafSample(
 
             return parser.map {
                 MafSimpleVariant(
-                    tumorSampleBarcode = it["Tumor_Sample_Barcode"],
+                    tumorSampleBarcode = it["Tumor_Sample_Barcode"].normalizedTumorSampleBarcode().orElse("INVALID"),
                     hugoSymbol = it["Hugo_Symbol"],
                     chromosome = "chr${it["Chromosome"]}",
                     gene = it["Gene"],

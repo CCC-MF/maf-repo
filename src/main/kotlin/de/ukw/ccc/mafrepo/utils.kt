@@ -28,7 +28,7 @@ import java.util.*
 
 fun String.normalizedTumorSampleBarcode(): Optional<String> {
     val normalizedRegex = "[EHNRZ]/20\\d{2}/\\d+".toRegex()
-    val otherRegex = "([EHNRZ])(\\d+)-(\\d{2})_?(RNA|DNA)?".toRegex()
+    val otherRegex = "([EHNRZ])(\\d+)-(\\d{2})_?.*".toRegex()
 
     if (this matches normalizedRegex) {
         return Optional.of(this)
