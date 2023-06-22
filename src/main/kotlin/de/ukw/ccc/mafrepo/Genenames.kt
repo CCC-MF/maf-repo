@@ -62,5 +62,15 @@ data class Gene(
     @JsonProperty("ensembl_gene_id") val ensemblGeneId: String = "",
     val cosmic: String?,
     val symbol: String,
-    val name: String
-)
+    val name: String,
+    @JsonProperty("mane_select")
+    val maneSelect: Set<String>?
+) {
+    fun nmNumber(): Optional<String> {
+        val nm = maneSelect?.filter { it.startsWith("NM_") }
+        if (nm.isNullOrEmpty()) {
+            return Optional.empty()
+        }
+        return Optional.of(nm.first())
+    }
+}

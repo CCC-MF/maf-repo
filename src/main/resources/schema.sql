@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS simple_variant
     interpretation       varchar(255) default ''    not null,
     gene_name            varchar(255),
     hgnc_id              varchar(255),
+    nm_number            varchar(255),
     modified_at          datetime,
     version              int,
     active               boolean      default false not null,

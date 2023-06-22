@@ -56,9 +56,12 @@ class UploadController(
             try {
                 val prepared = MafSample.map(savedUpload.id, file.inputStream).onEach { sample ->
                     sample.simpleVariants.onEach { simpleVariant ->
-                        genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent {
-                            simpleVariant.geneName = it.name
-                            simpleVariant.hgncId = it.hgncId
+                        genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent { gene ->
+                            simpleVariant.geneName = gene.name
+                            simpleVariant.hgncId = gene.hgncId
+                            gene.nmNumber().ifPresent {
+                                simpleVariant.nmNumber = it
+                            }
                         }
                     }
                 }

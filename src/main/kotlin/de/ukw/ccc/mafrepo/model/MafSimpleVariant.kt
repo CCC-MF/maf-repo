@@ -59,6 +59,7 @@ data class MafSimpleVariant(
     var active: Boolean = false,
     var hgncId: String? = null,
     var geneName: String? = null,
+    var nmNumber: String? = null,
     @LastModifiedDate var modifiedAt: Instant? = null,
     @Version var version: Int = 0
 ) {

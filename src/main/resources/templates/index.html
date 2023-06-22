@@ -53,6 +53,7 @@
                         <th>HGNC-ID</th>
                         <th>Name</th>
                         <th>COSMIC_ID</th>
+                        <th>NM-Name</th>
                         <th>START_POSITION</th>
                         <th>END_POSITION</th>
                         <th>REFERENCE_ALLELE</th>
@@ -83,6 +84,9 @@
                         <td class="bg-shaded clipboard">[[ ${simpleVariant.geneName} ]]</td>
                         <td class="bg-shaded clipboard">
                             <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
+                        </td>
+                        <td class="bg-shaded clipboard">
+                            <a th:href="@{https://www.ncbi.nlm.nih.gov/nuccore/{id}(id=${simpleVariant.nmNumber})}" target="_blank">[[ ${simpleVariant.nmNumber} ]]</a>
                         </td>
                         <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.endPosition} ]]</td>
