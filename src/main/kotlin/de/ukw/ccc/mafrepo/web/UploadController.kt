@@ -59,7 +59,6 @@ class UploadController(
                         genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent {
                             simpleVariant.geneName = it.name
                             simpleVariant.hgncId = it.hgncId
-                            simpleVariant.cosmicId = it.cosmic.orEmpty()
                         }
                     }
                 }
