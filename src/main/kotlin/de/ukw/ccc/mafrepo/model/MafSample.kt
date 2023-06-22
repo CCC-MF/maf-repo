@@ -64,7 +64,7 @@ data class MafSample(
                     tumorSeqAllele2 = it["Tumor_Seq_Allele2"],
                     hgvsc = it["HGVSc"],
                     hgvsp = it["HGVSp_Short"],
-                    tDepth = it["t_depth"].toLong(),
+                    tDepth = it["t_depth"].toLongOrNull() ?: 0,
                     dbSnpRs = it["dbSNP_RS"]
                 )
             }.groupBy { it.tumorSampleBarcode }.map {
