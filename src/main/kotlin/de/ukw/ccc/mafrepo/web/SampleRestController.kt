@@ -27,9 +27,9 @@ package de.ukw.ccc.mafrepo.web
 import de.ukw.ccc.mafrepo.model.MafSample
 import de.ukw.ccc.mafrepo.model.MafSampleId
 import de.ukw.ccc.mafrepo.model.MafSampleRepository
+import de.ukw.ccc.mafrepo.model.MafSimpleVariant
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @RestController
 class SampleRestController(
@@ -46,9 +46,17 @@ class SampleRestController(
         mafSampleRepository.deleteById(id)
     }
 
-    @GetMapping(path = ["samples"])
-    fun findSample(@RequestParam q: String): ResponseEntity<List<MafSample>> {
-        return ResponseEntity.of(Optional.of(mafSampleRepository.findAllByTumorSampleBarcodeLikeIgnoreCase(q)))
+    @GetMapping(path = ["samples/{id}/simplevariants"])
+    fun findSamplesSimpleVariants(
+        @PathVariable id: String,
+        @RequestParam(defaultValue = "false") all: Boolean
+    ): ResponseEntity<List<MafSimpleVariant>> {
+        val result = mafSampleRepository.findAllByTumorSampleBarcodeLikeIgnoreCase(id).flatMap {
+            it.simpleVariants
+        }.filter {
+            all || it.active
+        }
+        return ResponseEntity.ok(result)
     }
 
 }
