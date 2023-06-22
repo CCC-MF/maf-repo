@@ -26,6 +26,7 @@ package de.ukw.ccc.mafrepo.model
 
 import de.ukw.ccc.mafrepo.normalizedTumorSampleBarcode
 import org.apache.commons.csv.CSVFormat
+import org.apache.commons.csv.CSVRecord
 import org.springframework.data.annotation.Id
 import org.springframework.data.jdbc.core.mapping.AggregateReference
 import org.springframework.data.relational.core.mapping.MappedCollection
@@ -45,15 +46,16 @@ data class MafSample(
     val simpleVariants: Set<MafSimpleVariant>
 ) {
     companion object {
-        fun map(uploadId: MafUploadId, inputStream: InputStream): Set<MafSample> {
-            val parser = CSVFormat.RFC4180.builder()
-                .setHeader()
-                .setDelimiter("\t")
-                .setSkipHeaderRecord(true)
-                .build()
-                .parse(InputStreamReader(inputStream))
+        val parser = CSVFormat.RFC4180.builder()
+            .setHeader()
+            .setDelimiter("\t")
+            .setSkipHeaderRecord(true)
+            .build()
 
-            return parser.map {
+        fun map(uploadId: MafUploadId, inputStream: InputStream): Set<MafSample> {
+            val records = parser.parse(InputStreamReader(inputStream))
+
+            return records.map {
                 MafSimpleVariant(
                     tumorSampleBarcode = it["Tumor_Sample_Barcode"].normalizedTumorSampleBarcode().orElse("INVALID"),
                     hugoSymbol = it["Hugo_Symbol"],
@@ -67,11 +69,33 @@ data class MafSample(
                     hgvsp = it["HGVSp_Short"],
                     tDepth = it["t_depth"].toLongOrNull() ?: 0,
                     dbSnpRs = it["dbSNP_RS"],
-                    allelicFrequency = it["AF_alt_tum"].toDoubleOrNull() ?: .0
+                    allelicFrequency = it["AF_alt_tum"].toDoubleOrNull() ?: .0,
+                    nmNumber = nmNumber(it)
                 )
             }.groupBy { it.tumorSampleBarcode }.map {
                 MafSample(null, it.key, AggregateReference.to(uploadId), it.value.toSet())
             }.toSet()
+        }
+
+        fun nmNumber(record: CSVRecord): String {
+            val transcriptId = record["Transcript_ID"]
+            val allEffects = record["all_effects"]
+
+            return allEffects.split(';')
+                .mapNotNull { effect ->
+                    if (!effect.contains(transcriptId)) {
+                        return@mapNotNull null
+                    }
+                    val nmNumbers = effect
+                        .split(',')
+                        .filter { it.startsWith("NM_") }
+                        .joinToString(",")
+                    if (nmNumbers.isBlank()) {
+                        return@mapNotNull null
+                    }
+                    nmNumbers
+                }
+                .firstOrNull().orEmpty()
         }
     }
 }

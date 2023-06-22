@@ -49,7 +49,7 @@ class UploadController(
     }
 
     @PostMapping(path = ["/uploads"])
-    fun upload(file: MultipartFile,): String {
+    fun upload(file: MultipartFile): String {
         val upload = MafUpload(filename = file.originalFilename.orEmpty(), content = file.bytes.decodeToString())
         val savedUpload = mafUploadRepository.save(upload)
         if (null != savedUpload.id) {
@@ -59,9 +59,6 @@ class UploadController(
                         genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent { gene ->
                             simpleVariant.geneName = gene.name
                             simpleVariant.hgncId = gene.hgncId
-                            gene.nmNumber().ifPresent {
-                                simpleVariant.nmNumber = it
-                            }
                         }
                     }
                 }

@@ -84,8 +84,10 @@
                         <td class="bg-shaded clipboard">
                             <a th:href="@{http://cancer.sanger.ac.uk/cosmic/gene/analysis(ln=${simpleVariant.cosmicId})}" target="_blank">[[ ${simpleVariant.cosmicId} ]]</a>
                         </td>
-                        <td class="bg-shaded clipboard">
-                            <a th:href="@{https://www.ncbi.nlm.nih.gov/nuccore/{id}(id=${simpleVariant.nmNumber})}" target="_blank">[[ ${simpleVariant.nmNumber} ]]</a>
+                        <td class="clipboard">
+                            <span style="display: block" th:each="nm : ${simpleVariant.nmNumbersSplitted()}">
+                                <a th:href="@{https://www.ncbi.nlm.nih.gov/nuccore/{id}(id=${nm})}" target="_blank">[[ ${nm} ]]</a>
+                            </span>
                         </td>
                         <td class="clipboard">[[ ${simpleVariant.chromosome} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.startPosition} ]]</td>
