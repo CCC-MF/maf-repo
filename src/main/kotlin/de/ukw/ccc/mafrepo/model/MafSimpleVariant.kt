@@ -70,6 +70,8 @@ data class MafSimpleVariant(
         )
     }
 
+    fun allelicFrequencyPercentage() = String.format(Locale.ROOT, "%.3f %%", allelicFrequency)
+
     fun isValid(): Boolean {
         return this.tumorSampleBarcode.normalizedTumorSampleBarcode().isPresent
                 && this.tumorSampleBarcode.isNotBlank()

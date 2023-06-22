@@ -96,7 +96,7 @@
                         <td class="clipboard">[[ ${simpleVariant.hgvsp} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.tDepth} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.dbSnpRs} ]]</td>
-                        <td class="clipboard">[[ ${simpleVariant.allelicFrequency} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.allelicFrequencyPercentage()} ]]</td>
                         <td><input class="inline" th:value="${simpleVariant.interpretation}" th:data-id="${simpleVariant.id}" onchange="onChangedInterpretation(this.dataset['id'], this.value)" /></td>
                     </tr>
                     </tbody>

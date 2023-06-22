@@ -66,7 +66,8 @@ data class MafSample(
                     hgvsc = it["HGVSc"],
                     hgvsp = it["HGVSp_Short"],
                     tDepth = it["t_depth"].toLongOrNull() ?: 0,
-                    dbSnpRs = it["dbSNP_RS"]
+                    dbSnpRs = it["dbSNP_RS"],
+                    allelicFrequency = it["AF_alt_tum"].toDoubleOrNull() ?: .0
                 )
             }.groupBy { it.tumorSampleBarcode }.map {
                 MafSample(null, it.key, AggregateReference.to(uploadId), it.value.toSet())
