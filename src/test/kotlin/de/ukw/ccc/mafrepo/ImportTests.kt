@@ -37,9 +37,10 @@ class ImportTests {
     @Test
     fun testShouldParse() {
         val actual = MafSample.map(1, ClassPathResource("example.csv").inputStream)
-        assertThat(actual).hasSize(3)
+        assertThat(actual).hasSize(2)
 
-        assertThat(actual.first().simpleVariants.first().hugoSymbol).isEqualTo("MITF")
+        assertThat(actual.first().simpleVariants).hasSize(2)
+        assertThat(actual.last().simpleVariants).hasSize(1)
 
         println(actual)
     }

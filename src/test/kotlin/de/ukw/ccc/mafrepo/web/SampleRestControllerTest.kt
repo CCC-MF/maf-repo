@@ -120,6 +120,7 @@ class SampleRestControllerTest {
                             dbSnpRs = "novel",
                             allelicFrequency = 3.141,
                             nmNumber = "NM_00123.4",
+                            panel = "OnkoTestPanel",
                             active = true
                         ),
                         MafSimpleVariant(
@@ -137,6 +138,7 @@ class SampleRestControllerTest {
                             dbSnpRs = "novel",
                             allelicFrequency = 3.141,
                             nmNumber = "NM_00456.7",
+                            panel = "OnkoTestPanel",
                             active = false
                         )
                     )
