@@ -69,6 +69,7 @@ data class MafSample(
                     hgvsp = it["HGVSp_Short"],
                     tDepth = it["t_depth"].toLongOrNull() ?: 0,
                     dbSnpRs = it["dbSNP_RS"],
+                    panel = it["Panel"],
                     allelicFrequency = it["AF_alt_tum"].toDoubleOrNull() ?: .0,
                     nmNumber = nmNumber(it)
                 )

@@ -47,6 +47,7 @@
                         <th>Aktiv</th>
                         <th>Letzte Änderung</th>
                         <th>TUMOR_SAMPLE_BARCODE</th>
+                        <th>PANEL</th>
                         <th>HUGO_SYMBOL</th>
                         <th>GENE</th>
                         <th>HGNC-ID</th>
@@ -75,6 +76,7 @@
                             <time th:datetime="${simpleVariant.modifiedAt}">[[ ${simpleVariant.modifiedAt} ]]</time>
                         </td>
                         <td class="clipboard">[[ ${simpleVariant.tumorSampleBarcode} ]]</td>
+                        <td class="clipboard">[[ ${simpleVariant.panel} ]]</td>
                         <td class="clipboard">[[ ${simpleVariant.hugoSymbol} ]]</td>
                         <td class="clipboard">
                             <a th:href="@{https://www.ensembl.org/Homo_sapiens/Gene/Summary(g=${simpleVariant.gene})}" target="_blank">[[ ${simpleVariant.gene} ]]</a>

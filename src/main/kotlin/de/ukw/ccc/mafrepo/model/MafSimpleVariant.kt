@@ -53,6 +53,7 @@ data class MafSimpleVariant(
     val hgvsp: String,
     val tDepth: Long,
     val dbSnpRs: String,
+    val panel: String,
     var allelicFrequency: Double = 0.0,
     var cosmicId: String = "",
     var interpretation: String = "",
@@ -87,6 +88,7 @@ data class MafSimpleVariant(
                 && this.hgvsp.isNotBlank()
                 && this.tDepth > 0
                 && this.dbSnpRs.isNotBlank()
+                && this.panel.isNotBlank()
                 && this.allelicFrequency > 0
                 && this.cosmicId.isNotBlank()
                 && this.hgncId.orEmpty().isNotBlank()
