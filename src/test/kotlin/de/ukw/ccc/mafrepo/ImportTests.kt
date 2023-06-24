@@ -36,10 +36,10 @@ class ImportTests {
 
     @Test
     fun testShouldParse() {
-        val actual = MafSample.map(1, ClassPathResource("example.csv").inputStream)
+        val actual = MafSample.map(1, ClassPathResource("test.maf").inputStream)
         assertThat(actual).hasSize(2)
 
-        assertThat(actual.first().simpleVariants).hasSize(2)
+        assertThat(actual.first().simpleVariants).hasSize(3)
         assertThat(actual.last().simpleVariants).hasSize(1)
 
         println(actual)

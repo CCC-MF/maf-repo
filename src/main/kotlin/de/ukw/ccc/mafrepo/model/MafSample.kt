@@ -71,13 +71,18 @@ data class MafSample(
                     dbSnpRs = it["dbSNP_RS"],
                     panel = it["Panel"],
                     allelicFrequency = it["AF_alt_tum"].toDoubleOrNull() ?: .0,
-                    nmNumber = nmNumber(it)
+                    nmNumber = nmNumbers(it).joinToString(",")
                 )
             }.groupBy { it.tumorSampleBarcode }.map {
                 MafSample(null, it.key, AggregateReference.to(uploadId), it.value.toSet())
             }.toSet()
         }
 
+        fun nmNumbers(record: CSVRecord): List<String> {
+            return record["RefSeq"].split(",").map { it.trim() }
+        }
+
+        @Deprecated("Use nmNumbers() instead")
         fun nmNumber(record: CSVRecord): String {
             val transcriptId = record["Transcript_ID"]
             val allEffects = record["all_effects"]

@@ -30,24 +30,40 @@ import org.junit.jupiter.api.Test
 class MafSampleTest {
 
     @Test
-    fun shouldFindSingleNmNumber() {
-        val testContent = "Transcript_ID\tall_effects\n" +
-                "ENST00000123456\tGENE1,inframe_deletion,p.Xyz1234del,ENST00000123456,NM_001234.1;GENE1,inframe_deletion,p.Xyz1234del,ENST00000654321,NM_004321.1;"
-
-        val records = MafSample.parser.parse(testContent.reader())
+    fun shouldFindSingleNmNumberUsingAllEffects() {
+        val records = MafSample.parser.parse(singleNmNumberContent.reader())
 
         assertThat(MafSample.nmNumber(records.first())).isEqualTo("NM_001234.1")
     }
 
     @Test
-    fun shouldFindMultipleNmNumbers() {
-        val testContent = "Transcript_ID\tall_effects\n" +
-                "ENST00000654321\tGENE1,inframe_deletion,p.Xyz1234del,ENST00000123456,NM_001234.1;GENE1,inframe_deletion,p.Xyz1234del,ENST00000654321,NM_004321.1,NM_009876.7;"
-
-        val records = MafSample.parser.parse(testContent.reader())
+    fun shouldFindMultipleNmNumbersUsingAllEffects() {
+        val records = MafSample.parser.parse(multipleNmNumberContent.reader())
 
         assertThat(MafSample.nmNumber(records.first())).isEqualTo("NM_004321.1,NM_009876.7")
     }
 
+
+    @Test
+    fun shouldFindSingleNmNumber() {
+        val records = MafSample.parser.parse(singleNmNumberContent.reader())
+
+        assertThat(MafSample.nmNumbers(records.first())).containsExactly("NM_001234.1")
+    }
+
+    @Test
+    fun shouldFindMultipleNmNumbers() {
+        val records = MafSample.parser.parse(multipleNmNumberContent.reader())
+
+        assertThat(MafSample.nmNumbers(records.first())).containsExactly("NM_004321.1","NM_009876.7")
+    }
+
+    companion object {
+        const val singleNmNumberContent = "Transcript_ID\tall_effects\tRefSeq\n" +
+                "ENST00000123456\tGENE1,inframe_deletion,p.Xyz1234del,ENST00000123456,NM_001234.1;GENE1,inframe_deletion,p.Xyz1234del,ENST00000654321,NM_004321.1;\tNM_001234.1"
+
+        const val multipleNmNumberContent = "Transcript_ID\tall_effects\tRefSeq\n" +
+                "ENST00000654321\tGENE1,inframe_deletion,p.Xyz1234del,ENST00000123456,NM_001234.1;GENE1,inframe_deletion,p.Xyz1234del,ENST00000654321,NM_004321.1,NM_009876.7;\tNM_004321.1,NM_009876.7"
+    }
 
 }
