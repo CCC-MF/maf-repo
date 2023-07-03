@@ -26,6 +26,7 @@ package de.ukw.ccc.mafrepo.web
 
 import de.ukw.ccc.mafrepo.Genenames
 import de.ukw.ccc.mafrepo.model.*
+import de.ukw.ccc.mafrepo.parser.MafFileParser
 import org.springframework.data.jdbc.core.mapping.AggregateReference
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
@@ -39,7 +40,8 @@ import org.springframework.web.multipart.MultipartFile
 class UploadController(
     private val mafUploadRepository: MafUploadRepository,
     private val mafSampleRepository: MafSampleRepository,
-    private val genenames: Genenames
+    private val genenames: Genenames,
+    private val mafFileParser: MafFileParser
 ) {
 
     @GetMapping(path = ["/uploads"])
@@ -54,7 +56,7 @@ class UploadController(
         val savedUpload = mafUploadRepository.save(upload)
         if (null != savedUpload.id) {
             try {
-                val prepared = MafSample.map(savedUpload.id, file.inputStream).onEach { sample ->
+                val prepared = mafFileParser.apply(savedUpload.id, file.inputStream).onEach { sample ->
                     sample.simpleVariants.onEach { simpleVariant ->
                         genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent { gene ->
                             simpleVariant.geneName = gene.name

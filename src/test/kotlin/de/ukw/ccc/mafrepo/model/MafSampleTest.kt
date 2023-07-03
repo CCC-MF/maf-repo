@@ -30,21 +30,6 @@ import org.junit.jupiter.api.Test
 class MafSampleTest {
 
     @Test
-    fun shouldFindSingleNmNumberUsingAllEffects() {
-        val records = MafSample.parser.parse(singleNmNumberContent.reader())
-
-        assertThat(MafSample.nmNumber(records.first())).isEqualTo("NM_001234.1")
-    }
-
-    @Test
-    fun shouldFindMultipleNmNumbersUsingAllEffects() {
-        val records = MafSample.parser.parse(multipleNmNumberContent.reader())
-
-        assertThat(MafSample.nmNumber(records.first())).isEqualTo("NM_004321.1,NM_009876.7")
-    }
-
-
-    @Test
     fun shouldFindSingleNmNumber() {
         val records = MafSample.parser.parse(singleNmNumberContent.reader())
 

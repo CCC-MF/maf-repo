@@ -41,8 +41,6 @@ class ImportTests {
 
         assertThat(actual.first().simpleVariants).hasSize(3)
         assertThat(actual.last().simpleVariants).hasSize(1)
-
-        println(actual)
     }
 
 }

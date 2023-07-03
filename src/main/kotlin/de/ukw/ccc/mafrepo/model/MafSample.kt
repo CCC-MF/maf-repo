@@ -52,6 +52,7 @@ data class MafSample(
             .setSkipHeaderRecord(true)
             .build()
 
+        @Deprecated("Use MafFileParser")
         fun map(uploadId: MafUploadId, inputStream: InputStream): Set<MafSample> {
             val records = parser.parse(InputStreamReader(inputStream))
 
@@ -82,27 +83,6 @@ data class MafSample(
             return record["RefSeq"].split(",").map { it.trim() }
         }
 
-        @Deprecated("Use nmNumbers() instead")
-        fun nmNumber(record: CSVRecord): String {
-            val transcriptId = record["Transcript_ID"]
-            val allEffects = record["all_effects"]
-
-            return allEffects.split(';')
-                .mapNotNull { effect ->
-                    if (!effect.contains(transcriptId)) {
-                        return@mapNotNull null
-                    }
-                    val nmNumbers = effect
-                        .split(',')
-                        .filter { it.startsWith("NM_") }
-                        .joinToString(",")
-                    if (nmNumbers.isBlank()) {
-                        return@mapNotNull null
-                    }
-                    nmNumbers
-                }
-                .firstOrNull().orEmpty()
-        }
     }
 }
 
