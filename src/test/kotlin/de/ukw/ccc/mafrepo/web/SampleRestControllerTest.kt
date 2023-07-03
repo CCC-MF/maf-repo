@@ -24,9 +24,11 @@
 
 package de.ukw.ccc.mafrepo.web
 
+import de.ukw.ccc.mafrepo.active
 import de.ukw.ccc.mafrepo.model.MafSample
 import de.ukw.ccc.mafrepo.model.MafSampleRepository
 import de.ukw.ccc.mafrepo.model.MafSimpleVariant
+import de.ukw.ccc.mafrepo.testMafSimpleVariant
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -72,7 +74,7 @@ class SampleRestControllerTest {
                 jsonPath("$", Matchers.hasSize<MafSimpleVariant>(1))
             )
             .andExpect(
-                jsonPath("$.[0].hugoSymbol", Matchers.equalTo("BRAF"))
+                jsonPath("$.[0].hugoSymbol", Matchers.equalTo("ABC1"))
             )
     }
 
@@ -94,7 +96,10 @@ class SampleRestControllerTest {
                 jsonPath("$", Matchers.hasSize<MafSimpleVariant>(2))
             )
             .andExpect(
-                jsonPath("$.[0].hugoSymbol", Matchers.equalTo("BRAF"))
+                jsonPath("$.[0].hugoSymbol", Matchers.equalTo("ABC1"))
+            )
+            .andExpect(
+                jsonPath("$.[1].hugoSymbol", Matchers.equalTo("ABC2"))
             )
     }
 
@@ -105,42 +110,8 @@ class SampleRestControllerTest {
                     tumorSampleBarcode = barcode,
                     upload = AggregateReference.to(0),
                     simpleVariants = setOf(
-                        MafSimpleVariant(
-                            tumorSampleBarcode = barcode,
-                            hugoSymbol = "BRAF",
-                            chromosome = "chr7",
-                            gene = "ENSG00000157764",
-                            startPosition = 1,
-                            endPosition = 2,
-                            referenceAllele = "ABC",
-                            tumorSeqAllele2 = "DEF",
-                            hgvsc = "X.Chr76.a",
-                            hgvsp = "Y.Chr17.a",
-                            tDepth = 25,
-                            dbSnpRs = "novel",
-                            allelicFrequency = 3.141,
-                            nmNumber = "NM_00123.4",
-                            panel = "OnkoTestPanel",
-                            active = true
-                        ),
-                        MafSimpleVariant(
-                            tumorSampleBarcode = barcode,
-                            hugoSymbol = "ABC1",
-                            chromosome = "chr1",
-                            gene = "ENSG00000123456",
-                            startPosition = 3,
-                            endPosition = 4,
-                            referenceAllele = "ABC",
-                            tumorSeqAllele2 = "DEF",
-                            hgvsc = "X.Chr76.a",
-                            hgvsp = "Y.Chr17.a",
-                            tDepth = 25,
-                            dbSnpRs = "novel",
-                            allelicFrequency = 3.141,
-                            nmNumber = "NM_00456.7",
-                            panel = "OnkoTestPanel",
-                            active = false
-                        )
+                        testMafSimpleVariant(1).active(true),
+                        testMafSimpleVariant(2).active(false),
                     )
                 )
             )

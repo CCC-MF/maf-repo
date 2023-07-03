@@ -41,7 +41,7 @@ fun testCsvRecord(vararg content: Pair<String, String>): CSVRecord {
     return parser.parse("$headline\n$values".byteInputStream().reader()).records.first()
 }
 
-fun testMafSimpleVariant(testId: Int): MafSimpleVariant {
+fun testMafSimpleVariant(testId: Long): MafSimpleVariant {
     return MafSimpleVariant(
         tumorSampleBarcode = "H/2023/$testId",
         hugoSymbol = "ABC$testId",
@@ -60,4 +60,9 @@ fun testMafSimpleVariant(testId: Int): MafSimpleVariant {
         panel = "OnkoTestPanel",
         active = false
     )
+}
+
+fun MafSimpleVariant.active(active: Boolean): MafSimpleVariant {
+    this.active = active
+    return this
 }
