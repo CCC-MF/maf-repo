@@ -99,6 +99,9 @@ class SampleRestControllerTest {
                 jsonPath("$.[0].hugoSymbol", Matchers.equalTo("ABC1"))
             )
             .andExpect(
+                jsonPath("$.[0].tumorSampleBarcode", Matchers.equalTo("H/2023/1"))
+            )
+            .andExpect(
                 jsonPath("$.[1].hugoSymbol", Matchers.equalTo("ABC2"))
             )
     }

@@ -30,6 +30,7 @@ import de.ukw.ccc.mafrepo.model.MafSampleRepository
 import de.ukw.ccc.mafrepo.model.MafSimpleVariant
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriUtils
 
 @RestController
 class SampleRestController(
@@ -51,7 +52,8 @@ class SampleRestController(
         @PathVariable id: String,
         @RequestParam(defaultValue = "false") all: Boolean
     ): ResponseEntity<List<MafSimpleVariant>> {
-        val result = mafSampleRepository.findAllByTumorSampleBarcodeLikeIgnoreCase(id).flatMap {
+        val sampleId = UriUtils.decode(id, Charsets.UTF_8)
+        val result = mafSampleRepository.findAllByTumorSampleBarcodeLikeIgnoreCase(sampleId).flatMap {
             it.simpleVariants
         }.filter {
             all || it.active
