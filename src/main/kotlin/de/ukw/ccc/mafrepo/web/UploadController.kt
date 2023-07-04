@@ -24,9 +24,10 @@
 
 package de.ukw.ccc.mafrepo.web
 
-import de.ukw.ccc.mafrepo.Genenames
-import de.ukw.ccc.mafrepo.model.*
-import de.ukw.ccc.mafrepo.parser.MafFileParser
+import de.ukw.ccc.mafrepo.model.MafSampleRepository
+import de.ukw.ccc.mafrepo.model.MafUploadId
+import de.ukw.ccc.mafrepo.model.MafUploadRepository
+import de.ukw.ccc.mafrepo.service.FileHandlingService
 import org.springframework.data.jdbc.core.mapping.AggregateReference
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Controller
@@ -40,8 +41,7 @@ import org.springframework.web.multipart.MultipartFile
 class UploadController(
     private val mafUploadRepository: MafUploadRepository,
     private val mafSampleRepository: MafSampleRepository,
-    private val genenames: Genenames,
-    private val mafFileParser: MafFileParser
+    private val fileHandlingService: FileHandlingService
 ) {
 
     @GetMapping(path = ["/uploads"])
@@ -52,24 +52,8 @@ class UploadController(
 
     @PostMapping(path = ["/uploads"])
     fun upload(file: MultipartFile): String {
-        val upload = MafUpload(filename = file.originalFilename.orEmpty(), content = file.bytes.decodeToString())
-        val savedUpload = mafUploadRepository.save(upload)
-        if (null != savedUpload.id) {
-            try {
-                val prepared = mafFileParser.apply(savedUpload.id, file.inputStream).onEach { sample ->
-                    sample.simpleVariants.onEach { simpleVariant ->
-                        genenames.findGeneByEnsemblGeneId(simpleVariant.gene).ifPresent { gene ->
-                            simpleVariant.geneName = gene.name
-                            simpleVariant.hgncId = gene.hgncId
-                        }
-                    }
-                }
-                mafSampleRepository.saveAll(prepared)
-            } catch (e: Exception) {
-                // cleanup
-                mafUploadRepository.delete(savedUpload)
-                return "errors/400"
-            }
+        if (! fileHandlingService.handle(file.originalFilename.orEmpty(), file.inputStream)) {
+            return "errors/400"
         }
         return "redirect:/uploads"
     }

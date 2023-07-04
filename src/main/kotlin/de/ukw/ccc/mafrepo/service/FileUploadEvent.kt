@@ -22,30 +22,9 @@
  * SOFTWARE.
  */
 
-package de.ukw.ccc.mafrepo.model
+package de.ukw.ccc.mafrepo.service
 
-import org.apache.commons.codec.digest.DigestUtils
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.Id
-import org.springframework.data.relational.core.mapping.Table
-import org.springframework.data.repository.CrudRepository
-import java.time.Instant
-import java.util.*
+import org.springframework.context.ApplicationEvent
+import java.io.File
 
-typealias MafUploadId = Long
-
-@Table("upload")
-data class MafUpload(
-    @Id val id: MafUploadId? = null,
-    val filename: String,
-    val content: String,
-    val hash: String = DigestUtils.sha256Hex(content),
-    @CreatedDate
-    val createdAt: Instant = Instant.now()
-)
-
-interface MafUploadRepository : CrudRepository<MafUpload, MafUploadId> {
-    fun findAllByOrderByCreatedAtDesc(): Iterable<MafUpload>
-
-    fun findByHash(hash: String): Optional<MafUpload>
-}
+class FileUploadEvent(val file: File) : ApplicationEvent(file)

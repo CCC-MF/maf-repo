@@ -29,6 +29,7 @@
                 <thead>
                 <tr>
                     <th>Dateiname</th>
+                    <th>SHA256</th>
                     <th>Hochgeladen am</th>
                     <th>Link</th>
                     <th></th>
@@ -37,6 +38,7 @@
                 <tbody>
                 <tr th:each="upload : ${uploads}" th:id="'upload_' + ${upload.id}">
                     <td>[[ ${upload.filename} ]]</td>
+                    <td>[[ ${upload.hash} ]]</td>
                     <td><time th:datetime="${upload.createdAt}">[[ ${upload.createdAt} ]]</time></td>
                     <td><a th:href="@{/uploads/{id}(id=${upload.id})}">[[ @{/uploads/{id}(id=${upload.id})} ]]</a></td>
                     <td>

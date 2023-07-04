@@ -24,11 +24,9 @@
 
 package de.ukw.ccc.mafrepo.web
 
-import de.ukw.ccc.mafrepo.Genenames
 import de.ukw.ccc.mafrepo.model.MafSampleRepository
-import de.ukw.ccc.mafrepo.model.MafUpload
 import de.ukw.ccc.mafrepo.model.MafUploadRepository
-import de.ukw.ccc.mafrepo.parser.MafFileParser
+import de.ukw.ccc.mafrepo.service.FileHandlingService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -46,32 +44,30 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.io.InputStream
 
 @ExtendWith(SpringExtension::class)
 @ExtendWith(MockitoExtension::class)
 @WebMvcTest(controllers = [UploadController::class])
-@MockBeans(value = [
-    MockBean(MafSampleRepository::class),
-    MockBean(Genenames::class),
-    MockBean(MafFileParser::class)
-])
+@MockBeans(
+    value = [
+        MockBean(MafSampleRepository::class),
+        MockBean(MafUploadRepository::class),
+    ]
+)
 class UploadControllerTest {
 
     @MockBean
-    private lateinit var mafUploadRepository: MafUploadRepository
+    private lateinit var fileHandlingService: FileHandlingService
 
     @Autowired
     private lateinit var mockMvc: MockMvc
 
+    private fun anyInputStream() = any(InputStream::class.java) ?: InputStream.nullInputStream()
+
     @BeforeEach
     fun setup() {
-        doAnswer {
-            MafUpload(
-                id = 1,
-                filename = "test.maf",
-                content = ClassPathResource("test.maf").inputStream.readAllBytes().toString(),
-            )
-        }.`when`(mafUploadRepository).save(any())
+        `when`(fileHandlingService.handle(anyString(), anyInputStream())).thenReturn(true)
     }
 
     @Test
@@ -83,7 +79,7 @@ class UploadControllerTest {
             .andExpect(status().is3xxRedirection)
             .andExpect(header().string(HttpHeaders.LOCATION, "/uploads"))
 
-        verify(mafUploadRepository, times(1)).save(any())
+        verify(fileHandlingService, times(1)).handle(anyString(), anyInputStream())
     }
 
 }

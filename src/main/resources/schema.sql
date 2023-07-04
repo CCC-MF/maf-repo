@@ -2,8 +2,9 @@ CREATE TABLE IF NOT EXISTS upload
 (
     id         int auto_increment primary key,
     filename   varchar(255)                       not null,
-    created_at datetime   default utc_timestamp() not null,
-    content    mediumtext default ''              not null
+    content    mediumtext default ''              not null,
+    hash       varchar(255)                       not null unique,
+    created_at datetime   default utc_timestamp() not null
 );
 
 CREATE TABLE IF NOT EXISTS sample

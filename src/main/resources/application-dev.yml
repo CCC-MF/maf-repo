@@ -9,5 +9,12 @@ spring:
 server:
   port: 8000
 
+app:
+  source:
+    fs:
+      active: "true"
+      # Will use test resources as source folder
+      dir: ./src/test/resources/
+
 
 
