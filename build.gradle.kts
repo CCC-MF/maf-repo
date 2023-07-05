@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     id("org.springframework.boot") version "3.1.1"
@@ -52,4 +53,14 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.named<BootBuildImage>("bootBuildImage") {
+    imageName.set("ghcr.io/ccc-mf/maf-repo")
+
+    environment.set(environment.get() + mapOf(
+        "BP_OCI_SOURCE" to "https://github.com/CCC-MF/maf-repo",
+        "BP_OCI_LICENSES" to "MIT",
+        "BP_OCI_DESCRIPTION" to "Application to collect MAF-File contents"
+    ))
 }
