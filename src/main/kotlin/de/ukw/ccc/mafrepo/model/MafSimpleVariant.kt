@@ -72,7 +72,7 @@ data class MafSimpleVariant(
         )
     }
 
-    fun allelicFrequencyPercentage() = String.format(Locale.ROOT, "%.3f %%", allelicFrequency)
+    fun allelicFrequencyPercentage() = String.format(Locale.ROOT, "%.3f %%", allelicFrequency * 100)
 
     fun nmNumbersSplitted() = nmNumber?.split(",").orEmpty()
 
