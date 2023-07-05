@@ -33,6 +33,7 @@ dependencies {
     implementation("org.springframework.integration:spring-integration-file")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.flywaydb:flyway-mysql")
     implementation("org.apache.commons:commons-csv:1.10.0")
     implementation("commons-codec:commons-codec:1.15")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

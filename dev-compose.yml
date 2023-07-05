@@ -1,6 +1,6 @@
 services:
   mariadb:
-    image: 'mariadb:latest'
+    image: 'mariadb:10'
     environment:
       MARIADB_DATABASE: dev
       MARIADB_USER: dev
