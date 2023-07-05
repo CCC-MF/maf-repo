@@ -53,6 +53,7 @@ fun testMafSimpleVariant(testId: Long): MafSimpleVariant {
         tumorSeqAllele2 = "DEF",
         hgvsc = "X.Chr76.a",
         hgvsp = "Y.Chr17.a",
+        exon = "42",
         tDepth = 25,
         dbSnpRs = "novel",
         allelicFrequency = 3.141,

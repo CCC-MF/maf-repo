@@ -53,6 +53,7 @@ class DefaultMafRecordMapperTest {
             "Tumor_Seq_Allele2" to "DEF",
             "HGVSc" to "X.Chr76.a",
             "HGVSp_Short" to "Y.Chr17.a",
+            "Exon_Number" to "42",
             "t_depth" to "25",
             "dbSNP_RS" to "novel",
             "Panel" to "OnkoTestPanel",

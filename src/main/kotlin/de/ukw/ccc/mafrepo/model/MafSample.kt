@@ -25,6 +25,7 @@
 package de.ukw.ccc.mafrepo.model
 
 import de.ukw.ccc.mafrepo.normalizedTumorSampleBarcode
+import de.ukw.ccc.mafrepo.parser.DefaultMafRecordMapper.Companion.exon
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVRecord
 import org.springframework.data.annotation.Id
@@ -68,6 +69,7 @@ data class MafSample(
                     tumorSeqAllele2 = it["Tumor_Seq_Allele2"],
                     hgvsc = it["HGVSc"],
                     hgvsp = it["HGVSp_Short"],
+                    exon = exon(it),
                     tDepth = it["t_depth"].toLongOrNull() ?: 0,
                     dbSnpRs = it["dbSNP_RS"],
                     panel = it["Panel"],

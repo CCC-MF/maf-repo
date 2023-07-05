@@ -51,6 +51,7 @@ data class MafSimpleVariant(
     val tumorSeqAllele2: String,
     val hgvsc: String,
     val hgvsp: String,
+    val exon: String,
     val tDepth: Long,
     val dbSnpRs: String,
     val panel: String,

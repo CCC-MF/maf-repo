@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS simple_variant
     tumor_seq_allele2    varchar(255) default ''    not null,
     hgvsc                varchar(255) default ''    not null,
     hgvsp                varchar(255) default ''    not null,
+    exon                 varchar(16)  default ''    not null,
     t_depth              int                        not null,
     db_snp_rs            varchar(255) default ''    not null,
     allelic_frequency    varchar(255) default ''    not null,

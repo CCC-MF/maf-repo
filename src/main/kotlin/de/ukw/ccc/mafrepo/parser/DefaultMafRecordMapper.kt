@@ -43,6 +43,7 @@ class DefaultMafRecordMapper : MafRecordMapper {
             hgvsp = record["HGVSp_Short"],
             tDepth = record["t_depth"].toLongOrNull() ?: 0,
             dbSnpRs = record["dbSNP_RS"],
+            exon = exon(record),
             panel = record["Panel"],
             allelicFrequency = record["AF_alt_tum"].toDoubleOrNull() ?: .0,
             nmNumber = nmNumbers(record).joinToString(",")
@@ -51,5 +52,16 @@ class DefaultMafRecordMapper : MafRecordMapper {
 
     private fun nmNumbers(record: CSVRecord): List<String> {
         return record["RefSeq"].split(",").map { it.trim() }
+    }
+
+
+    companion object {
+        fun exon(record: CSVRecord): String {
+            val exonNumber = record["Exon_Number"]
+            if (null != exonNumber) {
+                return exonNumber.substringBefore('/')
+            }
+            return "";
+        }
     }
 }

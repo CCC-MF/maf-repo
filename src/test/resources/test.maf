@@ -1,5 +1,5 @@
-Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Strand	Reference_Allele	Tumor_Seq_Allele2	dbSNP_RS	Tumor_Sample_Barcode	HGVSc	HGVSp	HGVSp_Short	t_depth	n_depth	Allele	Gene	SYMBOL	SYMBOL_SOURCE	HGNC_ID	RefSeq	AF_alt_tum	Panel
-AB1	1001	1	11110	11111	+	A	-	novel	H/2023/1	c.11110del	p.Gln11110del	p.Q1111del	12		A	ENSG00000011110	AB1	HGNC	11110	NM_0001.1	0.01	OCAPlus - Oncomine Comprehensive Assay Plus
-CD2	1002	1	2222	2222	+	A	G	novel	H/2023/1	c.2222A>G	p.Glu2222Gly	p.E2222G	123		G	ENSG00000002222	CD2	HGNC	2222	NM_00102.1	0.999	OCAPlus - Oncomine Comprehensive Assay Plus
-EF3	1003	1	12345	12345	+	A	-	novel	H/2023/1	c.12345del			1234		-	ENSG00000012345	EF3	HGNC	12345	NM_00012.3	0.02	OCAPlus - Oncomine Comprehensive Assay Plus
-GH4	1004	1	12345	12345	+	A	-	novel	H/2023/2	c.4567del	p.Glu4567	p.Glu7654	12345		-	ENSG00000004567	GH4	HGNC	4567	NM_001.2,NM_00012.3,NM_000123.3	0.03	OCAPlus - Oncomine Comprehensive Assay Plus
+Hugo_Symbol	Entrez_Gene_Id	Chromosome	Start_Position	End_Position	Strand	Reference_Allele	Tumor_Seq_Allele2	dbSNP_RS	Tumor_Sample_Barcode	HGVSc	HGVSp	HGVSp_Short	t_depth	n_depth	Allele	Gene	SYMBOL	SYMBOL_SOURCE	HGNC_ID	RefSeq	AF_alt_tum	Panel	Exon_Number
+AB1	1001	1	11110	11111	+	A	-	novel	H/2023/1	c.11110del	p.Gln11110del	p.Q1111del	12		A	ENSG00000011110	AB1	HGNC	11110	NM_0001.1	0.01	OCAPlus - Oncomine Comprehensive Assay Plus	01/20
+CD2	1002	1	2222	2222	+	A	G	novel	H/2023/1	c.2222A>G	p.Glu2222Gly	p.E2222G	123		G	ENSG00000002222	CD2	HGNC	2222	NM_00102.1	0.999	OCAPlus - Oncomine Comprehensive Assay Plus	12/30
+EF3	1003	1	12345	12345	+	A	-	novel	H/2023/1	c.12345del			1234		-	ENSG00000012345	EF3	HGNC	12345	NM_00012.3	0.02	OCAPlus - Oncomine Comprehensive Assay Plus	23/40
+GH4	1004	1	12345	12345	+	A	-	novel	H/2023/2	c.4567del	p.Glu4567	p.Glu7654	12345		-	ENSG00000004567	GH4	HGNC	4567	NM_001.2,NM_00012.3,NM_000123.3	0.03	OCAPlus - Oncomine Comprehensive Assay Plus	34/20/40

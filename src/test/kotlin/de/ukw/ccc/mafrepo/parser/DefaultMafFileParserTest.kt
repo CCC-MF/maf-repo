@@ -24,7 +24,6 @@
 
 package de.ukw.ccc.mafrepo.parser
 
-import de.ukw.ccc.mafrepo.model.MafSimpleVariant
 import de.ukw.ccc.mafrepo.testMafSimpleVariant
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
