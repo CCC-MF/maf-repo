@@ -25,39 +25,60 @@
 package de.ukw.ccc.mafrepo.config
 
 import de.ukw.ccc.mafrepo.service.FileUploadEvent
-import org.springframework.beans.factory.annotation.Value
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.integration.dsl.IntegrationFlow
 import org.springframework.integration.dsl.Pollers
 import org.springframework.integration.file.dsl.Files
+import org.springframework.util.Assert
 import java.io.File
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
+@ConfigurationProperties(AppSourceFsProperties.NAME)
+data class AppSourceFsProperties(
+    val active: Boolean = false,
+    var dir: File?
+) {
+    companion object {
+        const val NAME = "app.source.fs"
+    }
+}
 
 @Configuration
+@EnableConfigurationProperties(AppSourceFsProperties::class)
+@ConditionalOnProperty(name = ["app.source.fs.active"], havingValue = "true")
 class AppIntegrationConfig {
 
-    @Value("\${app.source.fs.dir}")
-    private lateinit var sourceDirectory: File
-
     @Bean
-    @ConditionalOnProperty(name = ["app.source.fs.active"], havingValue = "true")
+    @ConditionalOnProperty(name = ["app.source.fs.dir"])
     fun fileInputFlow(
-        applicationEventPublisher: ApplicationEventPublisher
+        applicationEventPublisher: ApplicationEventPublisher,
+        appSourceFsProperties: AppSourceFsProperties
     ): IntegrationFlow {
+        val sourceDir = appSourceFsProperties.dir
+        Assert.state(null != sourceDir && sourceDir.isDirectory) {
+            "Property 'app.source.fs.active' is 'true' but source directory is not available"
+        }
+        logger.info("Watching directory '{}' for MAF files", appSourceFsProperties.dir!!.canonicalPath)
         return IntegrationFlow
             .from(
-                Files.inboundAdapter(sourceDirectory).patternFilter("*.maf")
+                Files.inboundAdapter(sourceDir!!).patternFilter("*.maf")
             ) { e -> e.poller(Pollers.fixedDelay(10.seconds.toJavaDuration())) }
             .log()
             .handle { msg ->
                 applicationEventPublisher.publishEvent(FileUploadEvent(File(msg.payload.toString())))
             }
             .get()
+    }
+
+    companion object {
+        private val logger = LoggerFactory.getLogger(AppIntegrationConfig::class.java)
     }
 
 }
