@@ -28,20 +28,40 @@ import de.ukw.ccc.mafrepo.parser.DefaultMafFileParser
 import de.ukw.ccc.mafrepo.parser.DefaultMafRecordMapper
 import de.ukw.ccc.mafrepo.parser.MafFileParser
 import de.ukw.ccc.mafrepo.parser.MafRecordMapper
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+@ConfigurationProperties(AppProperties.NAME)
+data class AppProperties(
+    val parser: Parsers = Parsers.DEFAULT
+) {
+    companion object {
+        const val NAME = "app"
+    }
+}
+
+enum class Parsers {
+    DEFAULT
+}
+
 @Configuration
+@EnableConfigurationProperties(AppProperties::class)
 class AppConfig {
 
     @Bean
-    fun mafRecordMapper(): MafRecordMapper {
-        return DefaultMafRecordMapper()
+    fun mafRecordMapper(appProperties: AppProperties): MafRecordMapper {
+        return when (appProperties.parser) {
+            Parsers.DEFAULT -> DefaultMafRecordMapper()
+        }
     }
 
     @Bean
-    fun mafFileParser(mafRecordMapper: MafRecordMapper): MafFileParser {
-        return DefaultMafFileParser(mafRecordMapper)
+    fun mafFileParser(mafRecordMapper: MafRecordMapper, appProperties: AppProperties): MafFileParser {
+        return when (appProperties.parser) {
+            Parsers.DEFAULT -> DefaultMafFileParser(mafRecordMapper)
+        }
     }
 
 }
