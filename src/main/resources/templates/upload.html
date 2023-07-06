@@ -24,7 +24,7 @@
                 <h3>
                     Einsendenummer: <span class="monospace">[[ ${sample.tumorSampleBarcode} ]]</span>
                     <a class="btn btn-blue" title="Suche" th:href="@{/(code=${sample.tumorSampleBarcode})}">Nach Einsendenummer suchen</a>
-                    <button class="btn btn-red btn-delete" title="Löschen" th:data-id="${sample.id}" onclick="deleteSample(this.dataset['id'])" style="background: red; color: white">Diese Proben löschen</button>
+                    <button class="btn btn-red btn-delete" title="Löschen" th:data-id="${sample.id}" onclick="deleteSample(this.dataset['id'])" style="background: red; color: white">Löschen</button>
                 </h3>
                 <table class="samples">
                     <thead>
