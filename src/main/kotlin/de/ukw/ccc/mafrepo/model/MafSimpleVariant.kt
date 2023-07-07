@@ -105,11 +105,11 @@ interface MafSimpleVariantRepository : Repository<MafSimpleVariant, MafSimpleVar
     fun findAllByTumorSampleBarcode(simpleBarcode: String): Iterable<MafSimpleVariant>
 
     @Modifying
-    @Query("UPDATE simple_variant SET active=:value, modified_at=utc_timestamp(), version=version+1 WHERE id=:id")
-    fun updateActiveById(id: MafSimpleVariantId, value: Boolean)
+    @Query("UPDATE simple_variant SET active=:value, modified_at=:now, version=version+1 WHERE id=:id")
+    fun updateActiveById(id: MafSimpleVariantId, value: Boolean, now: Instant = Instant.now())
 
     @Modifying
-    @Query("UPDATE simple_variant SET interpretation=:value, modified_at=utc_timestamp(), version=version+1 WHERE id=:id")
-    fun updateInterpretationById(id: MafSimpleVariantId, value: String)
+    @Query("UPDATE simple_variant SET interpretation=:value, modified_at=:now, version=version+1 WHERE id=:id")
+    fun updateInterpretationById(id: MafSimpleVariantId, value: String, now: Instant = Instant.now())
 
 }
