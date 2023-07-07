@@ -102,7 +102,7 @@ interface MafSimpleVariantRepository : Repository<MafSimpleVariant, MafSimpleVar
 
     fun findById(id: MafSimpleVariantId): Optional<MafSimpleVariant>
 
-    fun findAllByTumorSampleBarcode(simpleBarcode: String): Iterable<MafSimpleVariant>
+    fun findAllByTumorSampleBarcodeOrderById(simpleBarcode: String): Iterable<MafSimpleVariant>
 
     @Modifying
     @Query("UPDATE simple_variant SET active=:value, modified_at=:now, version=version+1 WHERE id=:id")

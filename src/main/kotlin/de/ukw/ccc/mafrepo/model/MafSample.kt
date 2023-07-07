@@ -46,6 +46,11 @@ data class MafSample(
     @MappedCollection
     val simpleVariants: Set<MafSimpleVariant>
 ) {
+
+    fun orderedSimpleVariants(): List<MafSimpleVariant> {
+        return simpleVariants.toList().sortedBy { it.id }
+    }
+
     companion object {
         val parser = CSVFormat.RFC4180.builder()
             .setHeader()

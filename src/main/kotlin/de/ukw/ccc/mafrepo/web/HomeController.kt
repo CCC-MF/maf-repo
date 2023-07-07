@@ -46,7 +46,7 @@ class HomeController(
     ): String {
         val c = "$l/20$y/$s"
         if (l.isNotBlank() && y.toIntOrNull() != null && s.toIntOrNull() != null && y.toIntOrNull()!! > 0 && s.toIntOrNull()!! > 0) {
-            model.addAttribute("simpleVariants", mafSimpleVariantRepository.findAllByTumorSampleBarcode(c))
+            model.addAttribute("simpleVariants", mafSimpleVariantRepository.findAllByTumorSampleBarcodeOrderById(c))
         } else if (code.normalizedTumorSampleBarcode().isPresent) {
             val (l, year, s) = code.split('/')
             val y = year.subSequence(2, 4)

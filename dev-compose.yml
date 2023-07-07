@@ -6,5 +6,15 @@ services:
       MARIADB_USER: dev
       MARIADB_PASSWORD: dev
       MARIADB_ROOT_PASSWORD: dev
+      #TZ: 'Europe/Berlin'
     ports:
       - '13306:3306'
+#  postgres:
+#    image: 'postgres:15-alpine'
+#    environment:
+#      POSTGRES_DB: dev
+#      POSTGRES_USER: dev
+#      POSTGRES_PASSWORD: dev
+#      #TZ: 'Europe/Berlin'
+#    ports:
+#      - '15432:5432'
