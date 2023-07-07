@@ -2,19 +2,14 @@ spring:
   docker:
     compose:
       file: dev-compose.yml
-  sql:
-    init:
-      mode: always
 
 server:
   port: 8000
 
 app:
+  parser: DEFAULT
   source:
     fs:
       active: "true"
       # Will use test resources as source folder
       dir: ./src/test/resources/
-
-
-
