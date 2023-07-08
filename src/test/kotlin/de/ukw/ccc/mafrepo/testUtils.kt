@@ -67,3 +67,7 @@ fun MafSimpleVariant.active(active: Boolean): MafSimpleVariant {
     this.active = active
     return this
 }
+
+fun MafSimpleVariant.panel(panel: String): MafSimpleVariant {
+    return this.copy(panel = panel)
+}

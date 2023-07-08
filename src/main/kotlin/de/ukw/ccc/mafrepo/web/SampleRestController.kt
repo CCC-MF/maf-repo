@@ -31,6 +31,7 @@ import de.ukw.ccc.mafrepo.model.MafSimpleVariant
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriUtils
+import java.util.*
 
 @RestController
 class SampleRestController(
@@ -50,6 +51,7 @@ class SampleRestController(
     @GetMapping(path = ["samples/{id}/simplevariants"])
     fun findSamplesSimpleVariants(
         @PathVariable id: String,
+        @RequestParam(required = false) panel: Optional<String>,
         @RequestParam(defaultValue = "false") all: Boolean
     ): ResponseEntity<List<MafSimpleVariant>> {
         val sampleId = UriUtils.decode(id, Charsets.UTF_8)
@@ -57,6 +59,8 @@ class SampleRestController(
             it.simpleVariants
         }.filter {
             all || it.active
+        }.filter {
+            panel.isEmpty || panel.get() == it.panel
         }
         return ResponseEntity.ok(result)
     }

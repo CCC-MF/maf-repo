@@ -28,6 +28,7 @@ import de.ukw.ccc.mafrepo.active
 import de.ukw.ccc.mafrepo.model.MafSample
 import de.ukw.ccc.mafrepo.model.MafSampleRepository
 import de.ukw.ccc.mafrepo.model.MafSimpleVariant
+import de.ukw.ccc.mafrepo.panel
 import de.ukw.ccc.mafrepo.testMafSimpleVariant
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
@@ -103,6 +104,43 @@ class SampleRestControllerTest {
             )
             .andExpect(
                 jsonPath("$.[1].hugoSymbol", Matchers.equalTo("ABC2"))
+            )
+    }
+
+    @Test
+    fun shouldReturnSimpleVariantsWithPanel() {
+        doAnswer {
+            val barcode = it.getArgument<String>(0)
+            listOf(
+                MafSample(
+                    tumorSampleBarcode = barcode,
+                    upload = AggregateReference.to(0),
+                    simpleVariants = setOf(
+                        testMafSimpleVariant(1).active(true),
+                        testMafSimpleVariant(2).active(true).panel("OtherPanel"),
+                    )
+                )
+            )
+        }.`when`(this.mafSampleRepository).findAllByTumorSampleBarcodeLikeIgnoreCase(anyString())
+
+        mockMvc.perform(
+            get("/samples/{id}/simplevariants", UriUtils.encode("H/2023/1", Charsets.UTF_8))
+                .param("panel", "OnkoTestPanel")
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().is2xxSuccessful)
+            .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(
+                jsonPath("$", Matchers.hasSize<MafSimpleVariant>(1))
+            )
+            .andExpect(
+                jsonPath("$.[0].hugoSymbol", Matchers.equalTo("ABC1"))
+            )
+            .andExpect(
+                jsonPath("$.[0].tumorSampleBarcode", Matchers.equalTo("H/2023/1"))
+            )
+            .andExpect(
+                jsonPath("$.[0].panel", Matchers.equalTo("OnkoTestPanel"))
             )
     }
 
