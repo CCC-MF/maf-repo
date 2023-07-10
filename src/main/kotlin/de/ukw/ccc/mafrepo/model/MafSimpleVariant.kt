@@ -109,13 +109,17 @@ interface MafSimpleVariantRepository : Repository<MafSimpleVariant, MafSimpleVar
     fun updateActiveById(id: MafSimpleVariantId, value: Boolean, now: Instant)
 
     @Modifying
-    fun updateActiveById(id: MafSimpleVariantId, value: Boolean) = updateActiveById(id, value, Instant.now())
-
-    @Modifying
     @Query("UPDATE simple_variant SET interpretation=:value, modified_at=:now, version=version+1 WHERE id=:id")
     fun updateInterpretationById(id: MafSimpleVariantId, value: String, now: Instant)
 
-    @Modifying
-    fun updateInterpretationById(id: MafSimpleVariantId, value: String) = updateInterpretationById(id, value, Instant.now())
+}
+
+object MafSimpleVariantRepositoryExtensions {
+
+    fun MafSimpleVariantRepository.updateActiveById(id: MafSimpleVariantId, value: Boolean) =
+        this.updateActiveById(id, value, Instant.now())
+
+    fun MafSimpleVariantRepository.updateInterpretationById(id: MafSimpleVariantId, value: String) =
+        this.updateInterpretationById(id, value, Instant.now())
 
 }

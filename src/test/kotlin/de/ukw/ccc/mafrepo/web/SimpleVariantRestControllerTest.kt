@@ -41,6 +41,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.time.Instant
 import java.util.*
 
 @ExtendWith(SpringExtension::class)
@@ -53,6 +54,8 @@ class SimpleVariantRestControllerTest {
 
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    private fun anyInstant() = any(Instant::class.java) ?: Instant.now()
 
     @BeforeEach
     fun setup() {
@@ -70,7 +73,7 @@ class SimpleVariantRestControllerTest {
             .andExpect(status().is2xxSuccessful)
 
         val captor = ArgumentCaptor.forClass(Boolean::class.java)
-        verify(mafSimpleVariantRepository, times(1)).updateActiveById(anyLong(), captor.capture())
+        verify(mafSimpleVariantRepository, times(1)).updateActiveById(anyLong(), captor.capture(), anyInstant())
         assertThat(captor.value).isTrue()
     }
 
@@ -83,7 +86,7 @@ class SimpleVariantRestControllerTest {
             .andExpect(status().is2xxSuccessful)
 
         val captor = ArgumentCaptor.forClass(Boolean::class.java)
-        verify(mafSimpleVariantRepository, times(1)).updateActiveById(anyLong(), captor.capture())
+        verify(mafSimpleVariantRepository, times(1)).updateActiveById(anyLong(), captor.capture(), anyInstant())
         assertThat(captor.value).isFalse
     }
 
@@ -96,7 +99,7 @@ class SimpleVariantRestControllerTest {
         )
             .andExpect(status().is2xxSuccessful)
 
-        verify(mafSimpleVariantRepository, times(1)).updateInterpretationById(anyLong(), anyString())
+        verify(mafSimpleVariantRepository, times(1)).updateInterpretationById(anyLong(), anyString(), anyInstant())
     }
 
 }
