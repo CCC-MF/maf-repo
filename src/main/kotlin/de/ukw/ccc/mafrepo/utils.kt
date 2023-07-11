@@ -40,15 +40,3 @@ fun String.normalizedTumorSampleBarcode(): Optional<String> {
 
     return Optional.empty()
 }
-
-fun <T> Ok(data: T): Result<T> {
-    return Result.success(data)
-}
-
-fun <T> Result<T>.isOk(): Boolean = this.isSuccess
-
-fun <T> Err(err: Throwable): Result<T> {
-    return Result.failure(err)
-}
-
-fun <T> Result<T>.isErr(): Boolean = this.isFailure
