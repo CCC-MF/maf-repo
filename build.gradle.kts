@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
-    id("org.springframework.boot") version "3.1.5"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.3"
-    kotlin("jvm") version "1.9.10"
-    kotlin("plugin.spring") version "1.9.10"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.22"
 }
 
 group = "de.ukw.ccc"
@@ -62,6 +62,6 @@ tasks.named<BootBuildImage>("bootBuildImage") {
     environment.set(environment.get() + mapOf(
         "BP_OCI_SOURCE" to "https://github.com/CCC-MF/maf-repo",
         "BP_OCI_LICENSES" to "MIT",
-        "BP_OCI_DESCRIPTION" to "Application to collect MAF-File contents"
+        "BP_OCI_DESCRIPTION" to "Application to collect MAF-File content"
     ))
 }
